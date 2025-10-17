@@ -24,7 +24,7 @@ This is a full-stack web application built with the following technologies:
 | :---- | :---- |
 | **Sean Ivan M. Fabia** | Backend Developer & Team Lead |
 | **Paolo Leandro L. Pinca** | Main Designer / Frontend Developer |
-| **Khristher John B. Barrosa** | Frontend Developer |
+| **Khristher John B. Balat** | Frontend Developer |
 | **Marl June S. Ordonia** | Frontend Developer & Security |
 | **Adielyn P. Quitorio** | Database Administrator |
 
