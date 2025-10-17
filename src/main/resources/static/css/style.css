@@ -1,0 +1,214 @@
+ /* General Body Styles */
+        body {
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        /* Header & Navigation Bar */
+        header {
+            background-color: #0d2038;
+            color: white;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334a66;
+        }
+
+        .nav-left, .nav-right, .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-center {
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .logo-tagline {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #bdc3c7;
+            text-align: center;
+            margin: 0;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .hamburger-menu {
+            cursor: pointer;
+        }
+
+        .search-button {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 20px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 30px 5%;
+        }
+
+       .featured-header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0d2038;
+            display: block;
+            width: 30%;
+        }
+
+        /* --- SLIDER STYLES --- */
+
+        /* The main container that acts as the visible "window" */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* This is crucial - it hides the overflowing content */
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* The grid is now the track that moves */
+        .featured-grid {
+            display: flex;
+            gap: 20px;
+            width: 200%; /* Track is 200% wide for 2 slides */
+            transition: transform 0.5s ease-in-out; /* Smooth sliding animation */
+        }
+
+        /* Each card is a slide */
+        .featured-card {
+            position: relative;
+            width: 50%; /* Each slide takes up 50% of the track's width */
+            height: 700px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background-size: cover;
+            background-position: center;
+            box-sizing: border-box;
+            border-radius: 8px ;
+            overflow: hidden;
+        }
+
+        /* Unique image for the first card */
+        .featured-card:first-child {
+            background-image: linear-gradient(to top, rgba(0,0,0,0.85) 20%, transparent 70%), url('svgviewer-output (2).png');
+        }
+
+        /* Unique image for the second card */
+        #featured-card-2 {
+            background-image: linear-gradient(to top, rgba(0,0,0,0.85) 20%, transparent 70%), url('svgviewer-output\ \(2\).png');
+        }
+
+        /* --- NEW: Navigation Indicator Styles --- */
+        .slider-nav {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background-color: white;
+        }
+
+        /* Content styles */
+        .photo-credit {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            border-radius: 5px;
+        }
+
+        .card-content {
+            padding: 40px;
+        }
+
+        .news-tag {
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .card-headline {
+            font-size: 2.8rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin: 0 0 15px 0;
+            max-width: 80%;
+        }
+
+        .card-meta {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .view-post-button {
+            background-color: #DFD0B8;
+            border: none;
+            color: #0D2038;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .view-post-button:hover{
+            background-color: #0d2038;
+            color: #DFD0B8;
+        }

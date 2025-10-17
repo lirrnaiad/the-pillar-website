@@ -1,0 +1,64 @@
+# Gradle build / caches
+/.gradle/
+build/
+out/
+
+# IntelliJ IDEA
+/.idea/
+*.iml
+*.iws
+workspace.xml
+# keep run configs you want but ignore user-specific ones:
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+
+# Eclipse/other editors
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime
+*.log
+logs/
+spring.log
+
+# Test reports / coverage
+/coverage/
+/build/reports/
+/build/test-results/
+
+# Generated sources
+/generated/
+/target/
+/target/generated-sources/
+
+# Spring Boot packaged artifacts
+*.jar
+*.war
+*.ear
+
+# Local config / secrets / keystores
+.env
+.env.*
+*.jks
+*.keystore
+secrets/
+credentials/
+
+# Application local overrides
+application-local.yml
+application-local.properties
+application.*.local.yml
+application.*.local.properties
+
+# Misc
+*.class
+*.log.*
+*.tmp
+
+# Keep Gradle wrapper files committed:
+# do NOT add: gradlew, gradlew.bat, gradle/wrapper/gradle-wrapper.jar
