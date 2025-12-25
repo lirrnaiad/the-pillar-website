@@ -1,0 +1,38 @@
+{
+  "name": "the-pillar-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "The Pillar E-Publication Website - Official digital archive and publication platform for The Pillar, University of Eastern Philippines",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.7"
+  },
+  "keywords": [
+    "the-pillar",
+    "uep",
+    "publication",
+    "news",
+    "react"
+  ],
+  "authors": [
+    "Sean Ivan M. Fabia",
+    "Paolo Leandro L. Pinca",
+    "Marl June S. Ordonia",
+    "Khristher John B. Barrosa",
+    "Adielyn P. Quitorio"
+  ]
+}
+

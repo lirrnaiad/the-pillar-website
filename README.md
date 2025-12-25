@@ -1,107 +1,106 @@
-# **The Pillar E-Publication Website**
+# The Pillar E-Publication Website
 
-*Last Updated: October 18, 2025*
+Official digital archive and publication platform for **The Pillar**, the student publication of the University of Eastern Philippines.
 
-## **1\. Project Description**
+## Tech Stack
 
-This project is the official e-publication website for "The Pillar," the student publication of the University of Eastern Philippines. It serves as a centralized and organized hub for all published content, including news, editorials, announcements, and multimedia. The application provides a full Content Management System (CMS) for the editorial staff and a clean, accessible, and searchable interface for readers.
+- **Frontend:** React 18 + Vite
+- **Styling:** CSS (no frameworks)
+- **Routing:** React Router DOM
 
-This system is designed to act as the permanent digital archive for the publication, supplementing its primary social media presence on Facebook.
+## Project Structure
 
-## **2\. Technology Stack**
-
-This is a full-stack web application built with the following technologies:
-
-* **Backend:** Spring Boot (Java)  
-* **Frontend:** Thymeleaf, HTML5, CSS3, JavaScript  
-* **Database:** PostgreSQL  
-* **Build Tool:** Gradle (Groovy)  
-* **Deployment (Target):** Cloud Hosting Provider (e.g., Heroku, Railway)
-
-## **3\. Team Members**
-
-| Name | Role |
-| :---- | :---- |
-| **Sean Ivan M. Fabia** | Backend Developer & Team Lead |
-| **Paolo Leandro L. Pinca** | Main Designer / Frontend Developer |
-| **Khristher John B. Balat** | Frontend Developer |
-| **Marl June S. Ordonia** | Frontend Developer & Security |
-| **Adielyn P. Quitorio** | Database Administrator |
-
-## **4\. Prerequisites**
-
-Before you begin, ensure you have the following software installed on your local machine:
-
-* **Java Development Kit (JDK)**: Version 17 or later  
-* **Gradle**: Version 8 or later (or use the included Gradle Wrapper)  
-* **PostgreSQL**: A running local or remote instance  
-* **Git**: For version control
-
-## **5\. Local Development Setup**
-
-Follow these steps to get the project running on your local machine.
-
-### **Step 1: Clone the Repository**
-
-Clone this repository to your local machine using your preferred method (HTTPS or SSH).
-```bash
-git clone https://github.com/lirrnaiad/the-pillar-website.git 
-cd the-pillar-website
+```
+the-pillar-website/
+├── public/                     # Static assets served as-is
+├── src/
+│   ├── assets/                 # Images, fonts, etc.
+│   │   └── images/
+│   ├── components/             # Reusable React components
+│   │   ├── common/             # Shared components (Header, Footer, Nav)
+│   │   └── ui/                 # UI primitives (Button, Card, Input)
+│   ├── context/                # React Context providers
+│   ├── hooks/                  # Custom React hooks
+│   ├── pages/                  # Page components
+│   │   ├── Home/               # Landing page
+│   │   ├── News/               # News section
+│   │   ├── Feature/            # Feature articles
+│   │   ├── Opinion/            # Opinion pieces
+│   │   ├── SciTech/            # Science & Technology
+│   │   ├── Photos/             # Photojournalism
+│   │   ├── Cartoons/           # Cartoons and Comics
+│   │   ├── Videos/             # Video content
+│   │   ├── Editorial/          # Editorial articles
+│   │   ├── About/              # About The Pillar
+│   │   ├── Article/            # Single article view
+│   │   ├── Archive/            # Digital archive of past issues
+│   │   └── admin/              # CMS Admin pages
+│   │       ├── Dashboard/
+│   │       ├── Login/
+│   │       ├── NewArticle/
+│   │       ├── EditArticle/
+│   │       └── ManageArticles/
+│   ├── services/               # API service functions
+│   ├── styles/                 # Global CSS files
+│   │   └── variables.css       # CSS custom properties
+│   ├── utils/                  # Utility functions
+│   ├── App.jsx                 # Main app component
+│   ├── App.css                 # App-level styles
+│   ├── main.jsx                # Entry point
+│   └── index.css               # Global reset/base styles
+├── index.html                  # HTML entry point
+├── package.json
+├── vite.config.js
+└── README.md
 ```
 
-### **Step 2: Configure the Database**
+## Getting Started
 
-1. Ensure your PostgreSQL server is running.  
-2. Create a new database for the project. You can use a tool like psql or a GUI like DBeaver or PgAdmin.  
-   `CREATE DATABASE the_pillar_db;`
+### Prerequisites
 
-3. It is recommended to create a dedicated user with privileges for this database.
+- Node.js 18+ 
+- npm or yarn
 
-### **Step 3: Configure Application Properties**
+### Installation
 
-The application requires database credentials to connect to your PostgreSQL instance.
+```bash
+# Install dependencies
+npm install
 
-1. Navigate to the src/main/resources/ directory.  
-2. Create a file named application.properties. **This file is listed in .gitignore and should NOT be committed to the repository.**  
-3. Add the following configuration to your application.properties file, replacing the placeholder values with your actual database details:
-   ```bash
-   # PostgreSQL Datasource Configuration  
-   spring.datasource.url=jdbc:postgresql://localhost:5432/the_pillar_db  
-   spring.datasource.username=your_postgres_username  
-   spring.datasource.password=your_postgres_password
-   ```
+# Start development server
+npm run dev
 
-   ```bash
-   # JPA/Hibernate Configuration  
-   spring.jpa.hibernate.ddl-auto=update  
-   spring.jpa.show-sql=true  
-   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-   ```
+# Build for production
+npm run build
 
-### **Step 4: Build and Run the Application**
+# Preview production build
+npm run preview
+```
 
-1. Open a terminal in the root directory of the project.  
-2. Use the Gradle Wrapper (gradlew) to build and run the Spring Boot application. The wrapper will automatically download the correct Gradle version if you don't have it installed.  
-   On macOS/Linux:
-   ```bash
-   # This command will compile the code, download dependencies, and start the server.  
-   ./gradlew bootRun
-   ```
+## Content Sections
 
-   On Windows:
-   ```bash
-   # This command will do the same on Windows Command Prompt or PowerShell.  
-   gradlew.bat bootRun
-   ```
+Based on The Pillar's publication structure:
 
-4. Once the application has started successfully, it will be accessible at: **http://localhost:8080**
+| Section | Description |
+|---------|-------------|
+| News | Campus and community news |
+| Feature | In-depth feature articles |
+| Opinion | Opinion pieces and columns |
+| Sci-Tech | Science and technology content |
+| Photos | Photojournalism |
+| Cartoons | Cartoons and comics |
+| Videos | Video content |
+| Editorial | Editorial board articles |
 
-## **6\. Branching Strategy**
+## Team
 
-This project follows a Gitflow-inspired branching model:
+- Sean Ivan M. Fabia
+- Paolo Leandro L. Pinca
+- Marl June S. Ordonia
+- Khristher John B. Balat
+- Adielyn P. Quitorio
 
-* `main`: Represents the production-ready, deployed code. Direct pushes are disabled.  
-* `develop`: The primary development branch. All feature branches are merged into develop. It should always be stable.  
-* `feature/<ticket>-<desc>`: All new work (features, chores, bugfixes) must be done on a feature branch. Example: `feature/TP-005-create-user-entity`.
+## License
 
-All code must be submitted through a Pull Request and reviewed by at least one other team member before being merged into develop.
+© 2025 The Pillar, University of Eastern Philippines
+
