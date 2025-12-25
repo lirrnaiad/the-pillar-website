@@ -1,64 +1,35 @@
-# Gradle build / caches
-/.gradle/
-build/
-out/
+# Dependencies
+node_modules/
 
-# IntelliJ IDEA
-/.idea/
-*.iml
-*.iws
-workspace.xml
-# keep run configs you want but ignore user-specific ones:
-.idea/**/workspace.xml
-.idea/**/tasks.xml
+# Build output
+dist/
 
-# Eclipse/other editors
-.classpath
-.project
-.settings/
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Logs and runtime
-*.log
+# Logs
 logs/
-spring.log
+*.log
+npm-debug.log*
 
-# Test reports / coverage
-/coverage/
-/build/reports/
-/build/test-results/
-
-# Generated sources
-/generated/
-/target/
-/target/generated-sources/
-
-# Spring Boot packaged artifacts
-*.jar
-*.war
-*.ear
-
-# Local config / secrets / keystores
-.env
-.env.*
-*.jks
-*.keystore
-secrets/
-credentials/
-
-# Application local overrides
-application-local.yml
-application-local.properties
-application.*.local.yml
-application.*.local.properties
+# Testing
+coverage/
 
 # Misc
-*.class
-*.log.*
-*.tmp
-
-# Keep Gradle wrapper files committed:
-# do NOT add: gradlew, gradlew.bat, gradle/wrapper/gradle-wrapper.jar
+*.local
