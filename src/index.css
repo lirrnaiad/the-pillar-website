@@ -1,3 +1,6 @@
+@import './styles/fonts.css';
+@import './styles/variables.css';
+
 /* CSS Reset and Base Styles */
 *,
 *::before,
@@ -17,6 +20,9 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
 }
 
 img,
@@ -43,6 +49,7 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+  font-family: var(--font-family-heading);
 }
 
 a {
@@ -59,3 +66,4 @@ ol {
   min-height: 100vh;
 }
 
+ 

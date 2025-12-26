@@ -1,13 +1,16 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Header from './components/common/Header'
+import Home from './pages/Home/Home'
 import './App.css'
 
 function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        {/* Routes will be added here */}
-        <h1>The Pillar</h1>
-        <p>E-Publication Website - Coming Soon</p>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
       </div>
     </BrowserRouter>
   )
