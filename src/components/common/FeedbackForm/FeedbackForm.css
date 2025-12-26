@@ -1,0 +1,127 @@
+/* FeedbackForm Component Styles - Matching Figma Design */
+.feedback-form {
+  padding: var(--spacing-3xl) var(--spacing-md);
+}
+
+.feedback-form__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.feedback-form__card {
+  background-color: var(--color-accent);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+}
+
+/* Header */
+.feedback-form__header {
+  margin-bottom: var(--spacing-md);
+}
+
+.feedback-form__title {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  letter-spacing: 0;
+}
+
+.feedback-form__divider {
+  height: 2px;
+  background-color: var(--color-primary);
+  width: 100%;
+}
+
+/* Description */
+.feedback-form__description {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: var(--line-height-normal);
+}
+
+/* Form Styles */
+.feedback-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.feedback-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.feedback-form__label {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.feedback-form__input,
+.feedback-form__textarea {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.feedback-form__input {
+  max-width: 500px;
+}
+
+.feedback-form__input:focus,
+.feedback-form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(8, 38, 64, 0.15);
+}
+
+.feedback-form__textarea {
+  resize: vertical;
+  min-height: 200px;
+}
+
+/* Status Messages */
+.feedback-form__status {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-top: var(--spacing-sm);
+}
+
+.feedback-form__status--success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.feedback-form__status--error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .feedback-form__card {
+    padding: var(--spacing-2xl);
+  }
+
+  .feedback-form__description {
+    font-size: var(--font-size-2xl);
+  }
+}

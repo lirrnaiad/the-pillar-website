@@ -1,57 +1,127 @@
-/* CSS Custom Properties (Variables) */
+/* 
+ * CSS Custom Properties for The Pillar Website
+ * Based on Figma design data from landing-page-details.json
+ */
+
 :root {
-  /* Colors - to be customized based on The Pillar branding */
-  --color-primary: #1a1a2e;
-  --color-secondary: #16213e;
-  --color-accent: #e94560;
-  --color-background: #ffffff;
-  --color-surface: #f5f5f5;
-  --color-text-primary: #1a1a2e;
+  /* Primary Colors - from Figma */
+  --color-primary: #082640;
+  --color-primary-dark: #051a2d;
+  --color-secondary: #0a3050;
+  
+  /* Accent Colors - from Figma #dfd0b8 */
+  --color-accent: #dfd0b8;
+  --color-accent-light: #ebe0cc;
+  --color-accent-dark: #c9b89a;
+  
+  /* Category Badge Colors */
+  --color-news: #d4af37;
+  --color-feature: #4a90d9;
+  --color-opinion: #9b59b6;
+  --color-scitech: #27ae60;
+  --color-editorial: #e74c3c;
+  --color-sports: #f39c12;
+  --color-photos: #1abc9c;
+  --color-cartoons: #e91e63;
+  --color-videos: #ff5722;
+  
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #9e9e9e;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
+  
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f8f8;
+  --color-bg-dark: #082640;
+  
+  /* Text Colors */
+  --color-text-primary: #000000;
   --color-text-secondary: #666666;
+  --color-text-muted: #999999;
   --color-text-light: #ffffff;
+  
+  /* Border Colors */
   --color-border: #e0e0e0;
-
-  /* Typography */
-  --font-family-heading: 'Georgia', serif;
-  --font-family-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  --color-border-light: #f0f0f0;
+  --color-border-accent: #dfd0b8;
+  
+  /* Typography - from Figma */
+  --font-family-heading: 'Playfair Display', 'Georgia', serif;
+  --font-family-body: 'Roboto', 'Segoe UI', sans-serif;
+  --font-family-accent: 'Roboto', sans-serif;
+  
   /* Font Sizes */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-5xl: 3rem;       /* 48px */
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
   /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
-
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  --spacing-4xl: 6rem;     /* 96px */
+  
   /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 1rem;       /* 16px */
+  --radius-xl: 1.5rem;     /* 24px */
   --radius-full: 9999px;
-
+  
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-header: 0 14px 50px rgba(0, 0, 0, 0.25);
+  
   /* Transitions */
   --transition-fast: 150ms ease;
-  --transition-base: 300ms ease;
-  --transition-slow: 500ms ease;
-
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  
   /* Layout */
   --max-width-content: 1200px;
-  --header-height: 80px;
+  --max-width-narrow: 800px;
+  --header-height: 136px;
+  --footer-height: auto;
+  
+  /* Z-index layers */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-tooltip: 600;
 }
-

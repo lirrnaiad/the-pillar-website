@@ -1,17 +1,54 @@
-import { BrowserRouter } from 'react-router-dom'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Layout } from './components/common';
+
+// Page imports - these will be created by team members
+import Home from './pages/Home';
+import About from './pages/About';
+import News from './pages/News';
+import Feature from './pages/Feature';
+import Opinion from './pages/Opinion';
+import SciTech from './pages/SciTech';
+import Editorial from './pages/Editorial';
+import Photos from './pages/Photos';
+import Cartoons from './pages/Cartoons';
+import Videos from './pages/Videos';
+import Article from './pages/Article';
+import Archive from './pages/Archive';
+import NotFound from './pages/NotFound';
+
+import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="app">
-        {/* Routes will be added here */}
-        <h1>The Pillar</h1>
-        <p>E-Publication Website - Coming Soon</p>
-      </div>
+      <Layout>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          
+          {/* Category Routes */}
+          <Route path="/news" element={<News />} />
+          <Route path="/feature" element={<Feature />} />
+          <Route path="/opinion" element={<Opinion />} />
+          <Route path="/sci-tech" element={<SciTech />} />
+          <Route path="/editorial" element={<Editorial />} />
+          <Route path="/photos" element={<Photos />} />
+          <Route path="/cartoons" element={<Cartoons />} />
+          <Route path="/videos" element={<Videos />} />
+          
+          {/* Single Article Route */}
+          <Route path="/article/:slug" element={<Article />} />
+          
+          {/* Archive Route */}
+          <Route path="/archive" element={<Archive />} />
+          
+          {/* 404 Page */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
-
+export default App;
