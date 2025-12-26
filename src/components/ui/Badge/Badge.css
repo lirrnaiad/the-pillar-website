@@ -1,0 +1,78 @@
+/* Badge component styles - category variants */
+.badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  transition: opacity var(--transition-fast);
+}
+
+.badge:hover {
+  opacity: 0.85;
+}
+
+/* News category - Gold */
+.badge--news {
+  background-color: var(--color-news);
+  color: var(--color-text-primary);
+}
+
+/* Feature category - Blue */
+.badge--feature {
+  background-color: var(--color-feature);
+  color: var(--color-white);
+}
+
+/* Opinion category - Purple */
+.badge--opinion {
+  background-color: var(--color-opinion);
+  color: var(--color-white);
+}
+
+/* Sci-Tech category - Green */
+.badge--scitech {
+  background-color: var(--color-scitech);
+  color: var(--color-white);
+}
+
+/* Editorial category - Red */
+.badge--editorial {
+  background-color: var(--color-editorial);
+  color: var(--color-white);
+}
+
+/* Sports category - Orange */
+.badge--sports {
+  background-color: var(--color-sports);
+  color: var(--color-white);
+}
+
+/* Photos category - Teal */
+.badge--photos {
+  background-color: var(--color-photos);
+  color: var(--color-white);
+}
+
+/* Cartoons category - Pink */
+.badge--cartoons {
+  background-color: var(--color-cartoons);
+  color: var(--color-white);
+}
+
+/* Videos category - Deep Orange */
+.badge--videos {
+  background-color: var(--color-videos);
+  color: var(--color-white);
+}
+
+/* Responsive sizing */
+@media (min-width: 768px) {
+  .badge {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+}
