@@ -1,0 +1,101 @@
+/* Card component styles aligned with The Pillar design system */
+
+.card {
+  display: block;
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(10,10,20,0.06);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(10,10,20,0.08);
+}
+
+.card__media {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+
+.card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card__category {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  padding: 6px 10px;
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card__body {
+  padding: 14px;
+}
+
+.card__title {
+  margin: 0 0 8px 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.card__excerpt {
+  margin: 0 0 12px 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.card__meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.card__author {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.card__date {
+  margin-left: auto;
+  color: var(--color-text-secondary);
+}
+
+/* Small variant for thumbnail lists */
+.card--small .card__media {
+  height: 110px;
+}
+
+/* Featured larger variant */
+.card--large .card__media {
+  height: 340px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card__media {
+    height: 160px;
+  }
+
+  .card__title {
+    font-size: var(--font-size-base);
+  }
+}
