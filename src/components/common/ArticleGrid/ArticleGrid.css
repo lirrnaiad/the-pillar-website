@@ -8,15 +8,21 @@
   display: block;
 }
 
-@media (min-width: 600px) {
+/* Tablet: two columns */
+@media (min-width: 720px) {
   .article-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-lg);
   }
 }
 
-@media (min-width: 1000px) {
+/* Desktop: three columns */
+@media (min-width: 1024px) {
   .article-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+.article-grid__item {
+  display: block;
+  align-self: start;
 }
