@@ -1,0 +1,284 @@
+/* SearchBar Component Styles */
+.search-bar {
+  width: 100%;
+}
+
+.search-bar__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Left Action Buttons Container (Search icon + Clear button) */
+.search-bar__left-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  position: absolute;
+  left: var(--spacing-md);
+  height: 100%;
+}
+
+/* Search Icon - Leading */
+.search-bar__icon--search {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  color: var(--color-gray-500);
+  transition: color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* Input Field */
+.search-bar__input {
+  flex: 1;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-3xl) var(--spacing-md) var(--spacing-2xl);
+  padding-left: var(--spacing-2xl);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-white);
+  transition: all var(--transition-fast);
+}
+
+.search-bar__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-bar__input:hover {
+  border-color: var(--color-gray-400);
+}
+
+.search-bar__input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(223, 208, 184, 0.1);
+}
+
+/* Clear Button */
+.search-bar__clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.search-bar__clear-btn:hover {
+  color: var(--color-text-primary);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.search-bar__clear-btn:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.search-bar__clear-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Submit Button */
+.search-bar__submit-btn {
+  position: absolute;
+  right: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: var(--color-primary);
+  border: none;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  border-radius: var(--radius-sm);
+}
+.search-bar__submit-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.search-bar__submit-btn:active {
+  transform: translateY(1px);
+}
+
+.search-bar__submit-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Focused State */
+.search-bar--focused .search-bar__icon--search {
+  color: var(--color-accent);
+}
+
+/* Right actions (clear placed to the left of the submit button) */
+.search-bar__right-actions {
+  position: absolute;
+  /* place the clear button just to the left of the submit button with a small gap */
+  right: calc(var(--spacing-md) + 36px);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  height: 100%;
+}
+
+.search-bar__right-actions .search-bar__clear-btn {
+  background: none;
+}
+
+/* Default Variant */
+.search-bar--default {
+  width: 100%;
+}
+
+/* Compact Variant - for header inline use */
+.search-bar--compact .search-bar__input {
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-full);
+}
+
+.search-bar--compact .search-bar__left-actions {
+  left: var(--spacing-md);
+}
+
+.search-bar--compact .search-bar__icon--search {
+  width: 16px;
+  height: 16px;
+}
+
+.search-bar--compact .search-bar__clear-btn {
+  width: 20px;
+  height: 20px;
+}
+
+.search-bar--compact .search-bar__clear-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.search-bar--compact .search-bar__submit-btn {
+  width: 24px;
+  height: 24px;
+  right: var(--spacing-sm);
+}
+
+.search-bar--compact .search-bar__submit-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Modal Variant - for full-width modal search */
+.search-bar--modal .search-bar__input {
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) calc(var(--spacing-3xl) + 8px);
+  font-size: var(--font-size-lg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.search-bar--modal .search-bar__left-actions {
+  left: var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+.search-bar--modal .search-bar__icon--search {
+  width: 20px;
+  height: 20px;
+}
+
+.search-bar--modal .search-bar__clear-btn {
+  width: 32px;
+  height: 32px;
+}
+
+.search-bar--modal .search-bar__clear-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.search-bar--modal .search-bar__submit-btn {
+  width: 40px;
+  height: 40px;
+  right: var(--spacing-lg);
+}
+
+.search-bar--modal .search-bar__submit-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* adjust right-actions for modal variant (submit button is larger) */
+.search-bar--modal .search-bar__right-actions {
+  right: calc(var(--spacing-lg) + 44px);
+}
+
+/* adjust right-actions for compact variant */
+.search-bar--compact .search-bar__right-actions {
+  right: calc(var(--spacing-sm) + 28px);
+  gap: var(--spacing-xs);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .search-bar__input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .search-bar--compact .search-bar__input {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
+  }
+
+  .search-bar--compact .search-bar__left-actions {
+    left: var(--spacing-xs);
+  }
+
+  .search-bar--compact .search-bar__submit-btn {
+    right: var(--spacing-xs);
+  }
+}
+
+@media (min-width: 1024px) {
+  .search-bar--compact .search-bar__input {
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) var(--spacing-2xl);
+    font-size: var(--font-size-base);
+  }
+
+  .search-bar--compact .search-bar__icon--search {
+    width: 18px;
+    height: 18px;
+  }
+
+  .search-bar--compact .search-bar__clear-btn {
+    width: 22px;
+    height: 22px;
+  }
+
+  .search-bar--compact .search-bar__clear-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .search-bar--compact .search-bar__submit-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .search-bar--compact .search-bar__submit-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
