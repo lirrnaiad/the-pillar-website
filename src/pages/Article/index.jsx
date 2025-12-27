@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import './Article.css';
-import { getArticleBySlug, getRecentArticles } from '../../data/mockArticles';
+import { getArticleBySlug, getRecentArticles, getCategoryById } from '../../data/mockArticles';
 import { ArticleCard } from '../../components/ui/ArticleCard';
 
 function formatDate(d) {
@@ -14,6 +14,7 @@ function formatDate(d) {
 function Article() {
   const { slug } = useParams();
   const article = getArticleBySlug(slug);
+  const categoryObj = article ? getCategoryById(article.category) : null;
   const related = getRecentArticles(3).filter((a) => a.slug !== slug);
 
   if (!article) {
@@ -38,15 +39,34 @@ function Article() {
         <header className="article__header">
           <div className="article__hero" style={{ backgroundImage: `url(${article.image})` }} aria-hidden="true" />
           <div className="article__meta">
-            <span className="article__badge" style={{ ['--badge-color']: `var(--color-${article.category})` }}>
-              {article.category.toUpperCase()}
-            </span>
+            {categoryObj ? (
+              <Link
+                to={`/category/${categoryObj.id}`}
+                className="article__category"
+                style={{ ['--badge-color']: categoryObj.color }}
+              >
+                {categoryObj.name}
+              </Link>
+            ) : (
+              <span className="article__category" style={{ ['--badge-color']: `var(--color-${article.category})` }}>
+                {article.category}
+              </span>
+            )}
+
             <h1 className="article__title">{article.title}</h1>
+
             <div className="article__byline">
-              {article.author?.name && <span className="article__author">{article.author.name}</span>}
-              {article.publishedAt && <time className="article__date">{formatDate(article.publishedAt)}</time>}
+              {article.author?.name && (
+                <span className="article__author">By {article.author.name}</span>
+              )}
+              {article.publishedAt && (
+                <time className="article__date" dateTime={article.publishedAt}>
+                  {formatDate(article.publishedAt)}
+                </time>
+              )}
               {article.photographer && <span className="article__photographer"> — Photo: {article.photographer}</span>}
             </div>
+
             {article.excerpt && <p className="article__excerpt">{article.excerpt}</p>}
           </div>
         </header>

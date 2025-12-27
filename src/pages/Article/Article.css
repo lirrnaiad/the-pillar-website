@@ -59,6 +59,22 @@
   font-size: var(--font-size-xs);
 }
 
+.article__category,
+.article__badge {
+  background: var(--badge-bg, var(--color-gray-100));
+  color: var(--color-text-light);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+  text-decoration: none;
+}
+
+.article__category {
+  display: inline-block;
+  margin-bottom: var(--spacing-sm);
+}
+
 .article__title {
   margin: var(--spacing-sm) 0;
   font-size: var(--font-size-3xl);
@@ -67,6 +83,15 @@
 .article__byline {
   color: var(--color-text-muted);
   margin-bottom: var(--spacing-md);
+}
+
+.article__byline .article__author {
+  margin-right: var(--spacing-sm);
+  color: var(--color-text-secondary);
+}
+
+.article__byline .article__date {
+  color: var(--color-text-muted);
 }
 
 .article__excerpt {
