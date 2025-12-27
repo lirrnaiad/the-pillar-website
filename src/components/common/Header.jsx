@@ -43,7 +43,7 @@ function Header() {
           </span>
         </button>
         
-        <a href="/" className="header__logo">
+        <div className="header__logo">
           <div className="header__logo-icon">
             <img 
               src={logoImage} 
@@ -55,16 +55,17 @@ function Header() {
             <h1 className="header__title">The PILLAR</h1>
             <p className="header__slogan">CRITICAL. FEARLESS. UNAPOLOGETIC.</p>
           </div>
-        </a>
+        </div>
         
         <div className="header__actions">
           <a href="/" className="header__btn">Home</a>
           <button className="header__btn">About Us</button>
           <button className="header__btn header__btn--search" aria-label="Search">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="2"/>
-              <path d="M13 13L17 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <svg className="header__search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2.5"/>
+              <path d="M17 17L21 21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
+            <span className="header__search-label">Search</span>
           </button>
         </div>
       </header>
