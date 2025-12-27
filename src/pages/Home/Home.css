@@ -59,3 +59,31 @@
   color: var(--color-text-muted);
 }
 
+/* Filter Container - Category Dropdown Section */
+.home__filter-container {
+  margin-bottom: var(--spacing-2xl);
+  max-width: 400px;
+}
+
+.home__filter-info {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-body);
+}
+
+.home__filter-info strong {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (max-width: 768px) {
+  .home__filter-container {
+    max-width: 100%;
+  }
+
+  .home__section-label {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+  }
+}
