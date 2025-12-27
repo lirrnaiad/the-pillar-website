@@ -10,8 +10,15 @@ function Home() {
         <div className="container">
           <h2 className="home__section-label">FEATURED</h2>
           <div className="home__hero-placeholder">
-            <p>Featured Article Hero Component goes here</p>
-            <small>Assigned to: Khristher - ArticleHero component</small>
+            <ArticleHero
+              thumbnail={'https://picsum.photos/1200/800?random=201'}
+              category={'Feature'}
+              title={'Campus celebrates student innovation and projects during Balik Kampus'}
+              excerpt={'Students showcased a range of projects, performances, and community programs during the university fair.'}
+              date={'2025-09-22'}
+              author={'By The Pillar Staff'}
+              onClick={() => console.log('Open featured article')}
+            />
           </div>
         </div>
       </section>
