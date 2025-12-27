@@ -111,6 +111,28 @@
   margin-bottom: var(--spacing-md);
 }
 
+.article__content h1,
+.article__content h2,
+.article__content h3 {
+  margin: var(--spacing-md) 0;
+}
+
+.article__content blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: var(--spacing-md);
+  color: var(--color-text-muted);
+  margin: var(--spacing-md) 0;
+}
+
+.article__inline-image {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin: var(--spacing-md) 0;
+}
+
 .article__sidebar {
   display: block;
 }

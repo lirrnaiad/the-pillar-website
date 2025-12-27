@@ -11,6 +11,54 @@ function formatDate(d) {
   }
 }
 
+function escapeHtml(str = '') {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function inlineToHtml(text = '') {
+  const escaped = escapeHtml(text);
+  return escaped
+    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>');
+}
+
+function renderContent(content = '') {
+  if (!content) return null;
+  const blocks = content.split(/\n\s*\n/);
+  return blocks.map((block, i) => {
+    const trimmed = block.trim();
+    // Headings
+    const hMatch = trimmed.match(/^(#{1,6})\s+(.*)$/);
+    if (hMatch) {
+      const level = Math.min(hMatch[1].length, 6);
+      return (
+        <h${level} key={i} dangerouslySetInnerHTML={{ __html: inlineToHtml(hMatch[2]) }} />
+      );
+    }
+
+    // Blockquote
+    if (/^>\s?/.test(trimmed)) {
+      const text = trimmed.replace(/^>\s?/, '');
+      return <blockquote key={i} dangerouslySetInnerHTML={{ __html: inlineToHtml(text) }} />;
+    }
+
+    // Image-only block: ![alt](url)
+    const imgMatch = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
+    if (imgMatch) {
+      return <img key={i} src={imgMatch[2]} alt={imgMatch[1] || ''} className="article__inline-image" />;
+    }
+
+    // Paragraph (allow inline bold/italic/links)
+    return <p key={i} dangerouslySetInnerHTML={{ __html: inlineToHtml(block) }} />;
+  });
+}
+
 function Article() {
   const { slug } = useParams();
   const article = getArticleBySlug(slug);
@@ -72,11 +120,9 @@ function Article() {
         </header>
 
         <section className="article__body">
-          <div className="article__content">
-            {article.content.split('\n').map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
+          <div className="article__content">{
+            renderContent(article.content)
+          }</div>
 
           <aside className="article__sidebar">
             <div className="card card--sticky">
