@@ -1,7 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import './Article.css';
-import { getArticleBySlug, getRecentArticles, getCategoryById } from '../../data/mockArticles';
+import { getArticleBySlug, getRecentArticles, getCategoryById, getArticlesByCategory } from '../../data/mockArticles';
 import { ArticleCard } from '../../components/ui/ArticleCard';
+import { ArticleGrid } from '../../components/common/ArticleGrid';
 
 function formatDate(d) {
   try {
@@ -64,6 +65,7 @@ function Article() {
   const article = getArticleBySlug(slug);
   const categoryObj = article ? getCategoryById(article.category) : null;
   const related = getRecentArticles(3).filter((a) => a.slug !== slug);
+  const relatedByCategory = getArticlesByCategory(article?.category).filter((a) => a.slug !== slug).slice(0, 4);
 
   if (!article) {
     return (
@@ -147,6 +149,25 @@ function Article() {
             </div>
           </aside>
         </section>
+
+        { (relatedByCategory.length > 0 || related.length > 0) && (
+          <section className="article__related container">
+            <h2 className="article__section-title">Related Articles</h2>
+            <ArticleGrid
+              articles={(relatedByCategory.length > 0 ? relatedByCategory : related).map((r) => ({
+                id: r.id,
+                slug: r.slug,
+                thumbnail: r.image,
+                category: r.category,
+                title: r.title,
+                excerpt: r.excerpt,
+                date: r.publishedAt,
+              }))}
+              onCardClick={(a) => { window.location.href = `/article/${a.slug}` }}
+            />
+          </section>
+        )}
+
       </div>
     </article>
   );
