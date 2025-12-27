@@ -1,0 +1,22 @@
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--spacing-md);
+}
+
+.article-grid__item {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1000px) {
+  .article-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
