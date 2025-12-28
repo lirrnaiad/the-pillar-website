@@ -92,3 +92,14 @@
     flex: 1 1 auto;
   }
 }
+
+/* Link variant */
+.article-card--link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.article-card--link:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

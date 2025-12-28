@@ -163,7 +163,6 @@ function Article() {
                 excerpt: r.excerpt,
                 date: r.publishedAt,
               }))}
-              onCardClick={(a) => { window.location.href = `/article/${a.slug}` }}
             />
           </section>
         )}

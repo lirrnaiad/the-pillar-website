@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './ArticleCard.css'
 
 // Named export as per project conventions
@@ -9,6 +10,7 @@ export function ArticleCard({
   excerpt,
   date,
   onClick,
+  slug,
 }) {
   // map a category string to a CSS variable like `var(--color-news)`
   const mapCategoryToVar = (cat) => {
@@ -26,8 +28,8 @@ export function ArticleCard({
     return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
   }
 
-  return (
-    <article className="article-card" onClick={onClick} aria-label={title}>
+  const cardContent = (
+    <>
       <div className="article-card__media">
         {thumbnail ? (
           <img src={thumbnail} alt={title} className="article-card__thumbnail" />
@@ -51,6 +53,20 @@ export function ArticleCard({
         {excerpt && <p className="article-card__excerpt">{excerpt}</p>}
         {date && <div className="article-card__meta">{formatDate(date)}</div>}
       </div>
+    </>
+  )
+
+  if (slug) {
+    return (
+      <Link to={`/article/${slug}`} className="article-card article-card--link" aria-label={title}>
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return (
+    <article className="article-card" onClick={onClick} aria-label={title}>
+      {cardContent}
     </article>
   )
 }
