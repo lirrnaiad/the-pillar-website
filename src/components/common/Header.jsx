@@ -59,7 +59,7 @@ function Header() {
         
         <div className="header__actions">
           <a href="/" className="header__btn">Home</a>
-          <button className="header__btn">About Us</button>
+          <button className="header__btn"><a href="/about">About Us</a></button>
           <button className="header__btn header__btn--search" aria-label="Search">
             <svg className="header__search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2.5"/>
