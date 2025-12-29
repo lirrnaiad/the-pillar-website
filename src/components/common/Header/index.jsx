@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
+import { SearchBar } from '../../ui/SearchBar';
 
 // The Pillar logo
 import logoImage from '../../../assets/images/thepillar-logo.png';
@@ -20,6 +21,7 @@ const navLinks = [
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,8 +31,25 @@ function Header() {
     setIsSearchOpen(!isSearchOpen);
   };
 
+  useEffect(() => {
+    // Prevent background scroll when search modal is open
+    if (isSearchOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => document.body.classList.remove('no-scroll');
+  }, [isSearchOpen]);
+
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleSearch = (query) => {
+    // Navigate to search results page with query parameter
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+    setIsSearchOpen(false);
   };
 
   return (
@@ -125,17 +144,12 @@ function Header() {
         <div className="header__search-modal">
           <div className="header__search-overlay" onClick={toggleSearch}></div>
           <div className="header__search-content">
-            <form className="header__search-form" role="search">
-              <input
-                type="search"
-                className="header__search-input"
-                placeholder="Search articles..."
-                autoFocus
-              />
-              <button type="submit" className="header__search-submit">
-                Search
-              </button>
-            </form>
+            <SearchBar 
+              variant="modal"
+              autoFocus={true}
+              onSearch={handleSearch}
+              placeholder="Search articles..."
+            />
             <button 
               className="header__search-close"
               onClick={toggleSearch}

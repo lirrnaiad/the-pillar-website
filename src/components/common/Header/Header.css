@@ -210,10 +210,6 @@
   margin-top: var(--spacing-3xl);
 }
 
-.header__nav-item {
-  /* No border in the new design */
-}
-
 .header__nav-link {
   display: block;
   padding: var(--spacing-md) 0;
@@ -263,36 +259,10 @@
   padding: var(--spacing-lg);
 }
 
-.header__search-form {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.header__search-input {
-  flex: 1;
-  padding: var(--spacing-md);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-base);
-  transition: border-color var(--transition-fast);
-}
-
-.header__search-input:focus {
-  outline: none;
-  border-color: var(--color-accent);
-}
-
-.header__search-submit {
-  padding: var(--spacing-md) var(--spacing-xl);
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border-radius: var(--radius-md);
-  font-weight: var(--font-weight-semibold);
-  transition: background-color var(--transition-fast);
-}
-
-.header__search-submit:hover {
-  background-color: var(--color-primary-dark);
+/* When modal is open, prevent background scrolling */
+body.no-scroll {
+  overflow: hidden;
+  height: 100%;
 }
 
 .header__search-close {
