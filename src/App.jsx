@@ -13,6 +13,8 @@ import Photos from './pages/Photos';
 import Cartoons from './pages/Cartoons';
 import Videos from './pages/Videos';
 import Article from './pages/Article';
+import ViewPhotosArticle from './pages/ViewPhotosArticle';
+import ViewCartoonsArticle from './pages/ViewCartoonsArticle';
 import Archive from './pages/Archive';
 import NotFound from './pages/NotFound';
 
@@ -37,8 +39,10 @@ function App() {
           <Route path="/cartoons" element={<Cartoons />} />
           <Route path="/videos" element={<Videos />} />
           
-          {/* Single Article Route */}
+          {/* Single Article Routes */}
           <Route path="/article/:slug" element={<Article />} />
+          <Route path="/photos/:slug" element={<ViewPhotosArticle />} />
+          <Route path="/cartoons/:slug" element={<ViewCartoonsArticle />} />
           
           {/* Archive Route */}
           <Route path="/archive" element={<Archive />} />

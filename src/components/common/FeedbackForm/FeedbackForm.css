@@ -1,134 +1,135 @@
-/* FeedbackForm Component Styles - Matching Figma Design */
+.feedback-section {
+  padding: 2.25rem 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .feedback-form {
-  padding: var(--spacing-3xl) var(--spacing-md);
+  background-color: #dfd0b8; /* JSON: Rectangle 240 Fill */
+  border: 2px solid #082640; /* JSON: Rectangle 240 Stroke */
+  border-radius: 20px;       /* JSON: Rectangle 240 Radius */
+  padding: 40px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1302px;         /* JSON: Rectangle 240 Width */
 }
 
-.feedback-form__container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.feedback-form__card {
-  background-color: var(--color-accent);
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-xl);
-}
-
-/* Header */
+/* Header Section: "FEEDBACK FORM" + Line */
 .feedback-form__header {
-  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-.feedback-form__title {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
-  margin: 0 0 var(--spacing-sm) 0;
-  letter-spacing: 0;
+.feedback-form__label-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;           /* JSON: FEEDBACK FORM Size */
+  font-weight: 600;          /* JSON: SemiBold */
+  color: #082640;            /* JSON: Dark Blue */
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.feedback-form__divider {
+.feedback-form__rule {
+  flex: 1;
   height: 2px;
-  background-color: var(--color-primary);
+  background-color: #082640; /* JSON: Vector 15 Stroke */
   width: 100%;
 }
 
-/* Description */
-.feedback-form__description {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-lg) 0;
-  line-height: var(--line-height-normal);
+/* Main Title */
+.feedback-form__title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;           /* JSON: Title Size */
+  font-weight: 600;          /* JSON: SemiBold */
+  color: #000000;
+  margin: 0 0 40px 0;
+  line-height: 1.2;
+  max-width: 816px;          /* JSON: Text Width */
 }
 
-/* Form Styles */
-.feedback-form__form {
+.feedback-form__body {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 30px;
 }
 
-.feedback-form__field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+/* Labels */
+.feedback-form__field-label {
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;           /* JSON: Label Size */
+  font-weight: 600;          /* JSON: SemiBold */
+  color: #000000;
+  margin-bottom: 10px;
 }
 
-.feedback-form__label {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-}
-
+/* Input Fields */
 .feedback-form__input,
 .feedback-form__textarea {
-  width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--color-primary);
-  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  color: var(--color-text-primary);
-  background-color: var(--color-white);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background: #ffffff;
+  border: 1px solid #082640; /* JSON: Stroke Weight 1 */
+  /* JSON: TopLeftRadius 0, others 10 */
+  border-radius: 0px 10px 10px 10px; 
+  padding: 12px 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  color: #000000;
+  box-sizing: border-box;
 }
 
 .feedback-form__input {
-  max-width: 500px;
-}
-
-.feedback-form__input:focus,
-.feedback-form__textarea:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(8, 38, 64, 0.15);
-}
-
-/* Show navy border when the field has a value (not only on focus/hover) */
-.feedback-form__input.has-value,
-.feedback-form__textarea.has-value {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(8, 38, 64, 0.08);
+  height: 48px;              /* JSON: Rectangle 241 Height */
+  width: 100%;
+  max-width: 726px;          /* JSON: Rectangle 241 Width */
 }
 
 .feedback-form__textarea {
+  height: 261px;             /* JSON: Rectangle 242 Height */
+  width: 100%;
+  /* Max width approximates container width minus padding */
+  max-width: 1201px;         /* JSON: Rectangle 242 Width */
   resize: vertical;
-  min-height: 200px;
 }
 
-/* Status Messages */
-.feedback-form__status {
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  text-align: center;
-  margin-top: var(--spacing-sm);
+/* Button (Kept for functionality, styled to match theme) */
+.feedback-form__actions {
+  display: flex;
+  justify-content: flex-start; /* Aligned left to match input flow */
+  margin-top: 10px;
 }
 
-.feedback-form__status--success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+.feedback-form__btn {
+  background-color: #082640;
+  color: #ffffff;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.feedback-form__status--error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+.feedback-form__btn:hover {
+  opacity: 0.9;
 }
 
-/* Responsive Styles */
-@media (min-width: 768px) {
-  .feedback-form__card {
-    padding: var(--spacing-2xl);
+/* Responsive */
+@media (max-width: 768px) {
+  .feedback-form {
+    padding: 20px;
   }
-
-  .feedback-form__description {
-    font-size: var(--font-size-2xl);
+  
+  .feedback-form__title {
+    font-size: 24px;
+  }
+  
+  .feedback-form__input,
+  .feedback-form__textarea {
+    max-width: 100%; /* Full width on mobile */
   }
 }

@@ -5,7 +5,6 @@ import './Footer.css';
 // Monochrome logo for footer
 import logoImage from '../../../assets/images/thepillar-logo-monochrome.png';
 
-// Social media links
 const socialLinks = [
   { 
     name: 'Facebook', 
@@ -59,7 +58,6 @@ function Footer() {
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    // TODO: Implement newsletter signup with backend
     console.log('Newsletter signup:', email);
     setEmail('');
   };
@@ -67,57 +65,55 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer__container">
-        {/* Left Section - Logo and Description */}
-        <div className="footer__brand">
-          <Link to="/" className="footer__logo">
+        
+        {/* Left Column: Brand & Copyright */}
+        <div className="footer__left">
+          <Link to="/" className="footer__brand">
             <img 
               src={logoImage} 
               alt="The Pillar Logo" 
               className="footer__logo-image"
             />
-            <span className="footer__logo-title">THE PILLAR</span>
+            <span className="footer__brand-title">THE PILLAR</span>
           </Link>
+          
           <p className="footer__description">
             <strong>The Pillar</strong> is the official student publication of the 
             University of Eastern Philippines-Main Campus. 
             Upholding its tenet: <strong>Critical. Fearless. Unapologetic.</strong>
           </p>
-        </div>
-
-        {/* Right Section - Social Links */}
-        <div className="footer__social">
-          <h4 className="footer__heading">Follow us:</h4>
-          <div className="footer__social-links">
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                className="footer__social-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Follow us on ${social.name}`}
-              >
-                {social.icon}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Section */}
-      <div className="footer__bottom">
-        <div className="footer__bottom-container">
-          {/* Copyright */}
+          
           <p className="footer__copyright">
-            © <em>The Pillar. All Rights Reserved.</em>
+            © {new Date().getFullYear()} The Pillar. All Rights Reserved.
           </p>
+        </div>
 
-          {/* Newsletter Signup */}
+        {/* Right Column: Socials & Newsletter */}
+        <div className="footer__right">
+          
+          <div className="footer__social">
+            <h4 className="footer__heading">Follow us:</h4>
+            <div className="footer__social-links">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  className="footer__social-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Follow us on ${social.name}`}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
           <div className="footer__newsletter">
             <label htmlFor="newsletter-email" className="footer__newsletter-label">
               Login to get your e-copies of newsletters:
             </label>
-            <form className="footer__newsletter-form" onSubmit={handleNewsletterSubmit}>
+            <form onSubmit={handleNewsletterSubmit}>
               <input
                 type="email"
                 id="newsletter-email"
@@ -129,6 +125,7 @@ function Footer() {
               />
             </form>
           </div>
+
         </div>
       </div>
     </footer>

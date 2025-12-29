@@ -1,36 +1,31 @@
-/* Elgraine Black Font - Fontspring Demo */
+/* Elgraine Font Definitions */
+
+/* Elgraine Black - Main Title Font */
 @font-face {
   font-family: 'Elgraine Black';
-  src: url('../assets/fonts/ElgraineBlack-Regular.woff2') format('woff2'),
-       url('../assets/fonts/ElgraineBlack-Regular.woff') format('woff'),
-       url('../assets/fonts/ElgraineBlack-Regular.ttf') format('truetype');
-  font-weight: normal;
+  src: url('../assets/fonts/Elgraine Font/Elgraine-Black.otf') format('opentype');
+  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 
+/* Map other weights to Black for safety when using this specific family */
 @font-face {
   font-family: 'Elgraine Black';
-  src: url('../assets/fonts/ElgraineBlack-Bold.woff2') format('woff2'),
-       url('../assets/fonts/ElgraineBlack-Bold.woff') format('woff'),
-       url('../assets/fonts/ElgraineBlack-Bold.ttf') format('truetype');
-  font-weight: bold;
+  src: url('../assets/fonts/Elgraine Font/Elgraine-Black.otf') format('opentype');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
-
-/* Alternative: If using the exact Fontspring demo name */
 @font-face {
-  font-family: 'FONTSPRING DEMO - Elgraine Black';
-  src: url('../assets/fonts/FontspringDemo-ElgraineBlack.woff2') format('woff2'),
-       url('../assets/fonts/FontspringDemo-ElgraineBlack.woff') format('woff'),
-       url('../assets/fonts/FontspringDemo-ElgraineBlack.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'Elgraine Black';
+  src: url('../assets/fonts/Elgraine Font/Elgraine-Black.otf') format('opentype');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-/* Elgraine Black Italic for Title */
+/* Elgraine Black Italic */
 @font-face {
   font-family: 'Elgraine Black Italic';
   src: url('../assets/fonts/Elgraine Font/Elgraine-BlackItalic.otf') format('opentype');
@@ -39,7 +34,7 @@
   font-display: swap;
 }
 
-/* Elgraine Bold for Title */
+/* Elgraine Bold */
 @font-face {
   font-family: 'Elgraine Bold';
   src: url('../assets/fonts/Elgraine Font/Elgraine-Bold.otf') format('opentype');
@@ -48,4 +43,20 @@
   font-display: swap;
 }
 
+/* Elgraine Regular */
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../assets/fonts/Elgraine Font/Elgraine-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
+/* Keep legacy name just in case */
+@font-face {
+  font-family: 'FONTSPRING DEMO - Elgraine Black';
+  src: url('../assets/fonts/Elgraine Font/Elgraine-Black.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

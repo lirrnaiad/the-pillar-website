@@ -1,5 +1,6 @@
 /* Import CSS Variables */
 @import './styles/variables.css';
+@import './styles/fonts.css';
 
 /* Google Fonts - Roboto is the main font from Figma */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Roboto:wght@400;500;600;700&display=swap');
