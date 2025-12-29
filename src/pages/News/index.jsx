@@ -1,110 +1,76 @@
-import { useState } from 'react';
-import { useArticlesByCategory } from '../../hooks/useArticlesRest';
+import { useArticlesByCategory, useFeaturedArticleByCategory } from '../../hooks/useArticlesRest';
+import HeroSection from '../../components/category/HeroSection';
+import SubcategorySection from '../../components/category/SubcategorySection';
 import ArticleCard from '../../components/ui/ArticleCard';
 import { Spinner } from '../../components/common';
 import './News.css';
 
 function News() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const pageSize = 12;
+  // Fetch featured article for hero section
+  const { article: featuredArticle, loading: heroLoading } = useFeaturedArticleByCategory('news');
 
-  // Fetch articles for News category
-  // Using 'news' as the category slug - adjust if your backend uses a different slug
-  const { articles, pagination, loading, error, refetch } = useArticlesByCategory('news', {
-    page: currentPage,
-    size: pageSize,
+  // Fetch latest news articles (for "Latest News" section)
+  const { articles: latestArticles, loading: latestLoading } = useArticlesByCategory('news', {
+    page: 0,
+    size: 6,
     sortField: 'publishedAt',
     sortDirection: 'DESC',
   });
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="news-page">
+      {/* Small Header Section */}
+      <section className="news-header">
+        <div className="container">
+          <h1 className="news-header__title">NEWS</h1>
+        </div>
+      </section>
+
       {/* Hero Section */}
-      <section className="news-hero">
-        <div className="news-hero__background"></div>
+      {!heroLoading && featuredArticle && (
+        <HeroSection 
+          article={featuredArticle} 
+          categoryLabel="NEWS"
+        />
+      )}
+
+      {/* Latest News Section */}
+      <section className="news-latest">
         <div className="container">
-          <div className="news-hero__content">
-            <h1 className="news-hero__title">NEWS</h1>
-            <p className="news-hero__description">
-              Stay updated with the latest happenings in and around the University of Eastern Philippines campus.
-            </p>
-          </div>
+          <h2 className="news-latest__title">LATEST NEWS</h2>
+          {latestLoading ? (
+            <div className="news-latest__loading">
+              <Spinner size="48px" message="Loading latest news..." />
+            </div>
+          ) : latestArticles && latestArticles.length > 0 ? (
+            <div className="news-latest__grid">
+              {latestArticles.slice(0, 4).map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  article={article}
+                  variant="default"
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
 
-      {/* Articles Section */}
-      <section className="news-content">
-        <div className="container">
-          {loading && (
-            <div className="news-loading">
-              <Spinner size="72px" message="Loading news articles..." />
-            </div>
-          )}
+      {/* Academe Section */}
+      <SubcategorySection
+        categorySlug="news"
+        tagName="Academe"
+        title="ACADEME"
+        limit={6}
+      />
 
-          {error && (
-            <div className="news-error">
-              <h2>Error Loading Articles</h2>
-              <p>{error}</p>
-              <button onClick={refetch} className="news-error__retry">
-                Try Again
-              </button>
-            </div>
-          )}
-
-          {!loading && !error && articles.length === 0 && (
-            <div className="news-empty">
-              <h2>No Articles Found</h2>
-              <p>There are no news articles available at the moment.</p>
-            </div>
-          )}
-
-          {!loading && !error && articles.length > 0 && (
-            <>
-              <div className="news-grid">
-                {articles.map((article) => (
-                  <ArticleCard
-                    key={article.id}
-                    article={article}
-                    variant="default"
-                  />
-                ))}
-              </div>
-
-              {/* Pagination */}
-              {pagination.totalPages > 1 && (
-                <div className="news-pagination">
-                  <button
-                    className="news-pagination__btn"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 0}
-                    aria-label="Previous page"
-                  >
-                    Previous
-                  </button>
-                  
-                  <div className="news-pagination__info">
-                    Page {currentPage + 1} of {pagination.totalPages}
-                  </div>
-                  
-                  <button
-                    className="news-pagination__btn"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage >= pagination.totalPages - 1}
-                    aria-label="Next page"
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </section>
+      {/* National News Section */}
+      <SubcategorySection
+        categorySlug="news"
+        tagName="National News"
+        title="NATIONAL NEWS"
+        limit={6}
+      />
     </div>
   );
 }

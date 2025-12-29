@@ -328,3 +328,139 @@ export const useArticleWithViews = (slug, incrementViews = true) => {
   return { article, loading, error, refetch: fetchArticle };
 };
 
+/**
+ * Hook to fetch the first featured article in a category
+ * @param {string} categorySlug - Category slug
+ * @param {boolean} autoFetch - Whether to fetch automatically
+ * @returns {Object} { article, loading, error, refetch }
+ */
+export const useFeaturedArticleByCategory = (categorySlug, autoFetch = true) => {
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchFeatured = async () => {
+    if (!categorySlug) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Fetch featured articles for the category
+      // We'll fetch by category and filter for featured, then take the first one
+      const response = await getArticlesByCategory(categorySlug, {
+        page: 0,
+        size: 10,
+        sortField: 'publishedAt',
+        sortDirection: 'DESC',
+      });
+      
+      if (response.error) {
+        throw response.error;
+      }
+
+      const transformed = transformArticlesResponse(response);
+      
+      // Find the first featured article
+      const featuredArticle = transformed.articles.find(a => a.featured === true) || transformed.articles[0];
+      setArticle(featuredArticle || null);
+    } catch (err) {
+      console.error('Error fetching featured article by category:', err);
+      setError(err.message || 'Failed to fetch featured article');
+      setArticle(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (autoFetch && categorySlug) {
+      fetchFeatured();
+    }
+  }, [categorySlug, autoFetch]);
+
+  return { article, loading, error, refetch: fetchFeatured };
+};
+
+/**
+ * Hook to fetch articles by category and filter by tag (client-side filtering)
+ * Since the API filters are mutually exclusive, we fetch by category and filter client-side
+ * @param {string} categorySlug - Category slug
+ * @param {string} tagName - Tag name to filter by
+ * @param {Object} options - Query options
+ * @returns {Object} { articles, loading, error, refetch }
+ */
+export const useArticlesByCategoryAndTag = (categorySlug, tagName, options = {}) => {
+  const {
+    page = 0,
+    size = 10,
+    sortField = 'publishedAt',
+    sortDirection = 'DESC',
+    autoFetch = true,
+  } = options;
+
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchByCategoryAndTag = async () => {
+    if (!categorySlug) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Fetch articles by category
+      const params = {
+        page,
+        size: size * 2, // Fetch more to account for filtering
+        sortField,
+        sortDirection,
+      };
+
+      const response = await getArticlesByCategory(categorySlug, params);
+      
+      if (response.error) {
+        throw response.error;
+      }
+
+      const transformed = transformArticlesResponse(response);
+      
+      // Filter by tag name (client-side)
+      let filteredArticles = transformed.articles;
+      if (tagName) {
+        filteredArticles = transformed.articles.filter(article => {
+          if (!article.tags || !Array.isArray(article.tags)) return false;
+          return article.tags.some(tag => 
+            tag.name === tagName || tag.slug === tagName.toLowerCase().replace(/\s+/g, '-')
+          );
+        });
+      }
+
+      // Limit to requested size
+      filteredArticles = filteredArticles.slice(0, size);
+      
+      setArticles(filteredArticles);
+    } catch (err) {
+      console.error('Error fetching articles by category and tag:', err);
+      setError(err.message || 'Failed to fetch articles');
+      setArticles([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (autoFetch && categorySlug) {
+      fetchByCategoryAndTag();
+    }
+  }, [categorySlug, tagName, page, size, sortField, sortDirection, autoFetch]);
+
+  return {
+    articles,
+    loading,
+    error,
+    refetch: fetchByCategoryAndTag,
+  };
+};
+

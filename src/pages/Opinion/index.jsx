@@ -1,109 +1,84 @@
-import { useState } from 'react';
-import { useArticlesByCategory } from '../../hooks/useArticlesRest';
+import { useArticlesByCategory, useFeaturedArticleByCategory } from '../../hooks/useArticlesRest';
+import { getSubcategoriesForCategory } from '../../config/categorySubcategories';
+import HeroSection from '../../components/category/HeroSection';
+import SubcategorySection from '../../components/category/SubcategorySection';
 import ArticleCard from '../../components/ui/ArticleCard';
 import { Spinner } from '../../components/common';
 import './Opinion.css';
 
 function Opinion() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const pageSize = 12;
+  const categorySlug = 'opinion';
+  const categoryLabel = 'OPINION';
+  const subcategories = getSubcategoriesForCategory(categorySlug);
 
-  // Fetch articles for Opinion category
-  const { articles, pagination, loading, error, refetch } = useArticlesByCategory('opinion', {
-    page: currentPage,
-    size: pageSize,
+  // Fetch featured article for hero section
+  const { article: featuredArticle, loading: heroLoading } = useFeaturedArticleByCategory(categorySlug);
+
+  // Fetch latest articles (for "Latest Opinion" section)
+  const { articles: latestArticles, loading: latestLoading } = useArticlesByCategory(categorySlug, {
+    page: 0,
+    size: 6,
     sortField: 'publishedAt',
     sortDirection: 'DESC',
   });
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="opinion-page">
+      {/* Small Header Section */}
+      <section className="opinion-header">
+        <div className="container">
+          <h1 className="opinion-header__title">{categoryLabel}</h1>
+        </div>
+      </section>
+
       {/* Hero Section */}
-      <section className="opinion-hero">
-        <div className="opinion-hero__background"></div>
+      {!heroLoading && featuredArticle && (
+        <HeroSection 
+          article={featuredArticle} 
+          categoryLabel={categoryLabel}
+        />
+      )}
+
+      {/* Latest Opinion Section */}
+      <section className="opinion-latest">
         <div className="container">
-          <div className="opinion-hero__content">
-            <h1 className="opinion-hero__title">OPINION</h1>
-            <p className="opinion-hero__description">
-              Perspectives, commentaries, and viewpoints from our writers and contributors.
-            </p>
-          </div>
+          <h2 className="opinion-latest__title">LATEST {categoryLabel}</h2>
+          {latestLoading ? (
+            <div className="opinion-latest__loading">
+              <Spinner size="48px" message="Loading latest articles..." />
+            </div>
+          ) : latestArticles && latestArticles.length > 0 ? (
+            <div className="opinion-latest__grid">
+              {latestArticles.slice(0, 4).map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  article={article}
+                  variant="default"
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
 
-      {/* Articles Section */}
-      <section className="opinion-content">
-        <div className="container">
-          {loading && (
-            <div className="opinion-loading">
-              <Spinner size="72px" message="Loading opinion articles..." />
-            </div>
-          )}
+      {/* Subcategory Sections */}
+      {subcategories.length > 0 && subcategories[0] && (
+        <SubcategorySection
+          categorySlug={categorySlug}
+          tagName={subcategories[0]}
+          title={subcategories[0].toUpperCase()}
+          limit={6}
+        />
+      )}
 
-          {error && (
-            <div className="opinion-error">
-              <h2>Error Loading Articles</h2>
-              <p>{error}</p>
-              <button onClick={refetch} className="opinion-error__retry">
-                Try Again
-              </button>
-            </div>
-          )}
-
-          {!loading && !error && articles.length === 0 && (
-            <div className="opinion-empty">
-              <h2>No Articles Found</h2>
-              <p>There are no opinion articles available at the moment.</p>
-            </div>
-          )}
-
-          {!loading && !error && articles.length > 0 && (
-            <>
-              <div className="opinion-grid">
-                {articles.map((article) => (
-                  <ArticleCard
-                    key={article.id}
-                    article={article}
-                    variant="default"
-                  />
-                ))}
-              </div>
-
-              {/* Pagination */}
-              {pagination.totalPages > 1 && (
-                <div className="opinion-pagination">
-                  <button
-                    className="opinion-pagination__btn"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 0}
-                    aria-label="Previous page"
-                  >
-                    Previous
-                  </button>
-                  
-                  <div className="opinion-pagination__info">
-                    Page {currentPage + 1} of {pagination.totalPages}
-                  </div>
-                  
-                  <button
-                    className="opinion-pagination__btn"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage >= pagination.totalPages - 1}
-                    aria-label="Next page"
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </section>
+      {subcategories.length > 1 && subcategories[1] && (
+        <SubcategorySection
+          categorySlug={categorySlug}
+          tagName={subcategories[1]}
+          title={subcategories[1].toUpperCase()}
+          limit={6}
+        />
+      )}
     </div>
   );
 }
