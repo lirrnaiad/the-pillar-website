@@ -188,7 +188,14 @@ export const useArticlesByCategory = (categorySlug, options = {}) => {
 
       const response = await getArticlesByCategory(categorySlug, params);
       
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:189',message:'getArticlesByCategory response',data:{categorySlug,hasError:!!response.error,hasData:!!response.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+      // #endregion
+      
       if (response.error) {
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:193',message:'getArticlesByCategory has error',data:{categorySlug,errorMessage:response.error?.message,errorName:response.error?.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+        // #endregion
         throw response.error;
       }
 
@@ -196,6 +203,9 @@ export const useArticlesByCategory = (categorySlug, options = {}) => {
       setArticles(transformed.articles);
       setPagination(transformed.pagination);
     } catch (err) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:202',message:'useArticlesByCategory CATCH',data:{categorySlug,errorMessage:err?.message,errorName:err?.name,hasMessage:!!err?.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+      // #endregion
       console.error('Error fetching articles by category:', err);
       setError(err.message || 'Failed to fetch articles');
       setArticles([]);
@@ -237,7 +247,14 @@ export const useFeaturedArticles = (limit = 5, autoFetch = true) => {
     try {
       const response = await getFeaturedArticles(limit);
       
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:238',message:'getFeaturedArticles response',data:{hasError:!!response.error,hasData:!!response.data,dataIsArray:Array.isArray(response.data),dataLength:response.data?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+      // #endregion
+      
       if (response.error) {
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:242',message:'getFeaturedArticles has error',data:{errorMessage:response.error?.message,errorName:response.error?.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+        // #endregion
         throw response.error;
       }
 
@@ -245,6 +262,9 @@ export const useFeaturedArticles = (limit = 5, autoFetch = true) => {
       const articlesList = response.data || [];
       setArticles(articlesList);
     } catch (err) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:250',message:'useFeaturedArticles CATCH',data:{errorMessage:err?.message,errorName:err?.name,hasMessage:!!err?.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+      // #endregion
       console.error('Error fetching featured articles:', err);
       setError(err.message || 'Failed to fetch featured articles');
       setArticles([]);
