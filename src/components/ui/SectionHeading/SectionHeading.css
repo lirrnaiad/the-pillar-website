@@ -1,0 +1,29 @@
+.section-heading {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  width: 100%;
+  padding-bottom: var(--spacing-sm);
+}
+
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .section-heading {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
