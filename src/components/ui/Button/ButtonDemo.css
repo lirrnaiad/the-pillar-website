@@ -1,0 +1,341 @@
+/* Button Demo Styles */
+
+.button-demo {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-3xl);
+  background-color: var(--color-background);
+}
+
+.demo-header {
+  margin-bottom: var(--spacing-3xl);
+  text-align: center;
+}
+
+.demo-header h1 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-4xl);
+  color: var(--color-primary);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.demo-header p {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.demo-section {
+  margin-bottom: var(--spacing-3xl);
+  padding-bottom: var(--spacing-3xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.demo-section:last-child {
+  border-bottom: none;
+}
+
+.demo-section h2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Variant Groups */
+.variant-group {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.variant-group h3 {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+/* Button Grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.button-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-lg);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.button-showcase .label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.button-showcase .btn {
+  width: auto;
+}
+
+/* State Matrix */
+.state-matrix {
+  display: grid;
+  grid-template-columns: auto repeat(5, 1fr);
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-background);
+}
+
+.matrix-header {
+  display: contents;
+}
+
+.matrix-header > span {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  padding: var(--spacing-md);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.matrix-header > span:last-child {
+  border-right: none;
+}
+
+.matrix-row {
+  display: contents;
+}
+
+.matrix-row > .variant-label,
+.matrix-row > .matrix-cell {
+  padding: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  min-height: 60px;
+}
+
+.matrix-row > :last-child {
+  border-right: none;
+}
+
+.matrix-row:last-child > * {
+  border-bottom: none;
+}
+
+.variant-label {
+  background-color: var(--color-surface);
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--color-text-primary);
+}
+
+.matrix-cell {
+  background-color: var(--color-background);
+}
+
+/* State Indicators */
+.matrix-hover::before,
+.matrix-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: var(--radius-md);
+}
+
+.matrix-hover::before {
+  background-color: rgba(233, 69, 96, 0.05);
+}
+
+.matrix-active::before {
+  background-color: rgba(233, 69, 96, 0.15);
+}
+
+/* Real-World Examples */
+.example-group {
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+
+.example-group h3 {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.button-row {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.button-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.button-col .btn {
+  width: 100%;
+}
+
+/* Code Section */
+.code-section {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+}
+
+.code-example {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.code-example h3 {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
+.code-example pre {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.code-example code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  white-space: pre;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .button-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .state-matrix {
+    grid-template-columns: auto repeat(4, 1fr);
+  }
+
+  .matrix-header > span:nth-child(3) {
+    display: none;
+  }
+
+  .matrix-row > .matrix-cell:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-demo {
+    padding: var(--spacing-2xl);
+  }
+
+  .demo-header h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .demo-section h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .button-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .button-showcase {
+    padding: var(--spacing-md);
+  }
+
+  .state-matrix {
+    grid-template-columns: auto repeat(3, 1fr);
+    font-size: var(--font-size-xs);
+  }
+
+  .matrix-header > span:nth-child(4) {
+    display: none;
+  }
+
+  .matrix-row > .matrix-cell:nth-child(4) {
+    display: none;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .button-row .btn {
+    width: 100%;
+  }
+
+  .code-example pre {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-section {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+
+  .demo-header h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .variant-group h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .state-matrix {
+    display: none;
+  }
+
+  .code-section {
+    padding: var(--spacing-lg);
+  }
+}

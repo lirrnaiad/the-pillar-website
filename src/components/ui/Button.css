@@ -1,0 +1,2 @@
+/* Legacy: forward to per-component Button CSS */
+@import './Button/Button.css';

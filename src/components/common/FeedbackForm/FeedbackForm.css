@@ -89,6 +89,13 @@
   box-shadow: 0 0 0 3px rgba(8, 38, 64, 0.15);
 }
 
+/* Show navy border when the field has a value (not only on focus/hover) */
+.feedback-form__input.has-value,
+.feedback-form__textarea.has-value {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(8, 38, 64, 0.08);
+}
+
 .feedback-form__textarea {
   resize: vertical;
   min-height: 200px;

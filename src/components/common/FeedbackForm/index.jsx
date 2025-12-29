@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '../../ui/Button/';
 import './FeedbackForm.css';
 
 function FeedbackForm() {
@@ -61,7 +62,7 @@ function FeedbackForm() {
                 type="email"
                 id="email"
                 name="email"
-                className="feedback-form__input"
+                className={`feedback-form__input ${formData.email ? 'has-value' : ''}`}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -75,7 +76,7 @@ function FeedbackForm() {
               <textarea
                 id="message"
                 name="message"
-                className="feedback-form__textarea"
+                className={`feedback-form__textarea ${formData.message ? 'has-value' : ''}`}
                 rows={6}
                 value={formData.message}
                 onChange={handleChange}
@@ -94,6 +95,17 @@ function FeedbackForm() {
                 Oops! Something went wrong. Please try again later.
               </p>
             )}
+
+            <Button
+              type="submit"
+              disabled={!formData.email || !formData.message || isSubmitting}
+              loading={isSubmitting}
+              loadingText="Sending..."
+              variant="primary"
+              fullWidth
+            >
+              Submit Feedback
+            </Button>
           </form>
         </div>
       </div>
