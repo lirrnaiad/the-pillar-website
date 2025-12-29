@@ -1,0 +1,75 @@
+/* Input component styles - BEM-like naming */
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  font-family: var(--font-family-body);
+}
+
+.input__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+}
+
+.input__required {
+  color: var(--color-editorial);
+  margin-left: 0.25rem;
+}
+
+.input__control {
+  font-size: var(--font-size-base);
+  padding: calc(var(--spacing-sm)) calc(var(--spacing-md));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  outline: none;
+  box-shadow: none;
+  font-family: var(--font-family-body);
+}
+
+.input__control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(8, 38, 64, 0.06);
+}
+
+.input--focus .input__control {
+  border-color: var(--color-primary);
+}
+
+.input--error .input__control {
+  border-color: var(--color-editorial);
+}
+
+.input--disabled .input__control {
+  background: var(--color-gray-100);
+  color: var(--color-text-muted);
+  border-color: var(--color-border-light);
+  cursor: not-allowed;
+}
+
+.input__error {
+  color: var(--color-editorial);
+  font-size: var(--font-size-xs);
+  margin-top: 0.25rem;
+}
+
+/* Textarea tweaks */
+.input__control[type='textarea'],
+.input__control[rows] {
+  min-height: 6rem;
+  resize: vertical;
+  padding-top: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+}
+
+/* Mobile-first: slightly larger inputs on wider screens */
+@media (min-width: 768px) {
+  .input__control {
+    padding: calc(var(--spacing-md)) calc(var(--spacing-lg));
+    font-size: var(--font-size-lg);
+  }
+}
