@@ -1,0 +1,195 @@
+/* Feature Page Styles */
+.feature-page {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
+/* Hero Section */
+.feature-hero {
+  position: relative;
+  background-color: var(--color-primary);
+  padding: var(--spacing-4xl) var(--spacing-md);
+  margin-bottom: var(--spacing-3xl);
+  overflow: hidden;
+}
+
+.feature-hero__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(8, 38, 64, 0.95) 0%,
+    rgba(8, 38, 64, 0.9) 100%
+  );
+  z-index: 1;
+}
+
+.feature-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.feature-hero__title {
+  font-family: 'FONTSPRING DEMO - Elgraine', 'Elgraine', serif;
+  font-size: 4.375rem; /* 70px */
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.2;
+}
+
+.feature-hero__description {
+  font-size: 1.5625rem; /* 25px */
+  color: var(--color-white);
+  line-height: 1.5;
+  max-width: 598px;
+}
+
+/* Articles Content Section */
+.feature-content {
+  padding: 0 var(--spacing-md) var(--spacing-4xl);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+@media (min-width: 768px) {
+  .feature-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Loading State */
+.feature-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl) 0;
+  min-height: 400px;
+}
+
+/* Error State */
+.feature-error {
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-lg);
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-2xl) 0;
+}
+
+.feature-error h2 {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.feature-error p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.feature-error__retry {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  border: none;
+}
+
+.feature-error__retry:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Empty State */
+.feature-empty {
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.feature-empty h2 {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Pagination */
+.feature-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-3xl);
+  padding: var(--spacing-lg) 0;
+}
+
+.feature-pagination__btn {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-base), opacity var(--transition-base);
+  border: none;
+  min-width: 100px;
+}
+
+.feature-pagination__btn:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.feature-pagination__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feature-pagination__info {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 640px) {
+  .feature-hero__title {
+    font-size: 3rem; /* Smaller on mobile */
+  }
+  
+  .feature-hero__description {
+    font-size: 1.125rem; /* 18px on mobile */
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .feature-pagination {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .feature-pagination__info {
+    order: -1;
+  }
+}
+
