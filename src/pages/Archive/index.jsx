@@ -1,6 +1,15 @@
+import React, { useEffect, useState } from 'react';
 import './Archive.css';
+import { Spinner } from '../../components/common';
 
 function Archive() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <div className="archive">
       <div className="container">
@@ -12,10 +21,16 @@ function Archive() {
         </header>
 
         <div className="archive__content">
-          <div className="archive__placeholder">
-            <p>Publication archive will be displayed here</p>
-            <small>Past issues organized by year/month</small>
-          </div>
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '2.5rem 0' }}>
+              <Spinner size="64px" message="Loading archives…" />
+            </div>
+          ) : (
+            <div className="archive__placeholder">
+              <p>Publication archive will be displayed here</p>
+              <small>Past issues organized by year/month</small>
+            </div>
+          )}
         </div>
       </div>
     </div>
