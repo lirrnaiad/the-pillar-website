@@ -1,0 +1,28 @@
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--spacing-md);
+}
+
+.article-grid__item {
+  display: block;
+}
+
+/* Tablet: two columns */
+@media (min-width: 720px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
+/* Desktop: three columns */
+@media (min-width: 1024px) {
+  .article-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.article-grid__item {
+  display: block;
+  align-self: start;
+}
