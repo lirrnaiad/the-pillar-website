@@ -1,0 +1,51 @@
+/* Elgraine Black Font - Fontspring Demo */
+@font-face {
+  font-family: 'Elgraine Black';
+  src: url('../assets/fonts/ElgraineBlack-Regular.woff2') format('woff2'),
+       url('../assets/fonts/ElgraineBlack-Regular.woff') format('woff'),
+       url('../assets/fonts/ElgraineBlack-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Elgraine Black';
+  src: url('../assets/fonts/ElgraineBlack-Bold.woff2') format('woff2'),
+       url('../assets/fonts/ElgraineBlack-Bold.woff') format('woff'),
+       url('../assets/fonts/ElgraineBlack-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Alternative: If using the exact Fontspring demo name */
+@font-face {
+  font-family: 'FONTSPRING DEMO - Elgraine Black';
+  src: url('../assets/fonts/FontspringDemo-ElgraineBlack.woff2') format('woff2'),
+       url('../assets/fonts/FontspringDemo-ElgraineBlack.woff') format('woff'),
+       url('../assets/fonts/FontspringDemo-ElgraineBlack.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Elgraine Black Italic for Title */
+@font-face {
+  font-family: 'Elgraine Black Italic';
+  src: url('../assets/fonts/Elgraine Font/Elgraine-BlackItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Elgraine Bold for Title */
+@font-face {
+  font-family: 'Elgraine Bold';
+  src: url('../assets/fonts/Elgraine Font/Elgraine-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+
