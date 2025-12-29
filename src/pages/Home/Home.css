@@ -52,3 +52,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+.home__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: var(--spacing-4xl) 0;
+}
+
+.home__empty {
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.home__empty p {
+  font-size: 1.125rem;
+  margin: 0;
+}

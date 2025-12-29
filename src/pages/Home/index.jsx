@@ -1,83 +1,101 @@
 import React from 'react';
+import { useFeaturedArticles, useRecentArticles, useArticlesByCategory } from '../../hooks/useArticlesRest';
 import SectionHeading from '../../components/ui/SectionHeading';
 import FeaturedHero from '../../components/home/FeaturedHero';
 import ArticleCard from '../../components/ui/ArticleCard';
+import { Spinner } from '../../components/common';
 import './Home.css';
 
-// Mock Data
-const FEATURED_ARTICLES = [
-  {
-    category: 'News',
-    headline: "USC, PYDO spearheads Balik Kampus '25, spotlights Fair and Kabataan Caravan",
-    meta: 'September 23, 2025 | By Mychel Mainog',
-    image: 'https://placehold.co/1200x800/082640/dfd0b8?text=Balik+Kampus',
-    link: '/news/1'
-  },
-  {
-    category: 'Feature',
-    headline: 'UEP Students Excel in National Journalism Competition',
-    meta: 'October 15, 2025 | By Sarah Johnson',
-    image: 'https://placehold.co/1200x800/1a1a2e/ffffff?text=Journalism+Win',
-    link: '/feature/1'
+/**
+ * Format date for display
+ */
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  } catch (e) {
+    return dateString;
   }
-];
+};
 
-const RECENT_ARTICLES = [
-  {
-    category: 'Cartoon',
-    headline: 'KORAPTOBER WEEK 1',
-    meta: 'October 04, 2025',
-    image: 'https://placehold.co/800x600/dfd0b8/082640?text=Cartoon',
-    link: '/cartoon/1'
-  },
-  {
-    category: 'News',
-    headline: "CCJ stages officers' induction; Sleuth King and Queen strut during acquaintance",
-    meta: 'October 03, 2025 | Nino Balawang',
-    image: 'https://placehold.co/800x600/2c3e50/ffffff?text=Induction',
-    link: '/news/2'
-  },
-  {
-    category: 'News',
-    headline: "Lipon Panitik hosts Huruhimangraw for A.Y. '25-'26",
-    meta: 'October 03, 2025 | Wenona Sagonoy',
-    image: 'https://placehold.co/800x600/34495e/ffffff?text=Lipon+Panitik',
-    link: '/news/3'
-  }
-];
+/**
+ * Transform REST API article to FeaturedHero format
+ */
+const transformToFeaturedHeroFormat = (article) => {
+  if (!article) return null;
+  
+  const authorName = article.author?.fullName || 
+                     (article.author?.firstName && article.author?.lastName 
+                      ? `${article.author.firstName} ${article.author.lastName}` 
+                      : '');
+  
+  return {
+    category: article.category?.name || 'Article',
+    headline: article.title || 'Untitled',
+    meta: `${formatDate(article.publishedAt)}${authorName ? ` | By ${authorName}` : ''}`,
+    image: article.cover?.url || 'https://placehold.co/1200x800/082640/dfd0b8?text=Article',
+    link: getArticleLink(article)
+  };
+};
 
-const LATEST_NEWS = [
-  {
-    category: 'News',
-    headline: "COE holds Stakeholders' Consultative Meeting",
-    meta: 'October 03, 2025',
-    image: 'https://placehold.co/600x400/082640/ffffff?text=COE',
-    link: '/news/4'
-  },
-  {
-    category: 'News',
-    headline: "CNAHS kicks off A.Y. '25-'26 with Freshmen Orientation",
-    meta: 'October 03, 2025',
-    image: 'https://placehold.co/600x400/2980b9/ffffff?text=CNAHS',
-    link: '/news/5'
-  },
-  {
-    category: 'News',
-    headline: "New Research Center Opens",
-    meta: 'October 01, 2025',
-    image: 'https://placehold.co/600x400/8e44ad/ffffff?text=Research',
-    link: '/news/6'
+/**
+ * Get article link based on category
+ */
+const getArticleLink = (article) => {
+  if (!article || !article.slug) return '#';
+  
+  const categorySlug = article.category?.slug?.toLowerCase() || '';
+  
+  if (categorySlug === 'photos' || categorySlug.includes('photo')) {
+    return `/photos/${article.slug}`;
   }
-];
+  if (categorySlug === 'cartoons' || categorySlug === 'cartoons-and-comics' || categorySlug.includes('cartoon') || categorySlug.includes('comic')) {
+    return `/cartoons/${article.slug}`;
+  }
+  
+  return `/article/${article.slug}`;
+};
 
 const Home = () => {
+  // Fetch featured articles (limit to 2-3 for the hero)
+  const { articles: featuredArticles, loading: featuredLoading } = useFeaturedArticles(3);
+  
+  // Fetch recent articles (for "Recently Posted" section)
+  const { articles: recentArticles, loading: recentLoading } = useRecentArticles(3);
+  
+  // Fetch latest news articles (for "Latest News" section)
+  const { articles: latestNewsArticles, loading: latestNewsLoading } = useArticlesByCategory('news', {
+    page: 0,
+    size: 6,
+    sortField: 'publishedAt',
+    sortDirection: 'DESC',
+  });
+
+  // Transform featured articles for FeaturedHero component
+  const transformedFeaturedArticles = featuredArticles.slice(0, 3).map(transformToFeaturedHeroFormat).filter(Boolean);
+
   return (
     <div className="home">
       {/* Featured Section */}
       <section className="home__section">
         <div className="container">
           <SectionHeading title="Featured" />
-          <FeaturedHero articles={FEATURED_ARTICLES} />
+          {featuredLoading ? (
+            <div className="home__loading">
+              <Spinner size="72px" message="Loading featured articles..." />
+            </div>
+          ) : transformedFeaturedArticles.length > 0 ? (
+            <FeaturedHero articles={transformedFeaturedArticles} />
+          ) : (
+            <div className="home__empty">
+              <p>No featured articles available at the moment.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -85,19 +103,30 @@ const Home = () => {
       <section className="home__section home__section--bg">
         <div className="container">
           <SectionHeading title="Recently Posted" />
-          <div className="recent-grid">
-            <div className="recent-grid__main">
-              <ArticleCard 
-                article={RECENT_ARTICLES[0]} 
-                variant="hero" 
-                className="h-full"
-              />
+          {recentLoading ? (
+            <div className="home__loading">
+              <Spinner size="48px" message="Loading recent articles..." />
             </div>
-            <div className="recent-grid__side">
-              <ArticleCard article={RECENT_ARTICLES[1]} />
-              <ArticleCard article={RECENT_ARTICLES[2]} />
+          ) : recentArticles.length > 0 ? (
+            <div className="recent-grid">
+              <div className="recent-grid__main">
+                <ArticleCard 
+                  article={recentArticles[0]} 
+                  variant="hero" 
+                  className="h-full"
+                />
+              </div>
+              <div className="recent-grid__side">
+                {recentArticles.slice(1, 3).map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="home__empty">
+              <p>No recent articles available at the moment.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -105,11 +134,21 @@ const Home = () => {
       <section className="home__section">
         <div className="container">
           <SectionHeading title="Latest News" />
-          <div className="news-grid">
-            {LATEST_NEWS.map((article, index) => (
-              <ArticleCard key={index} article={article} />
-            ))}
-          </div>
+          {latestNewsLoading ? (
+            <div className="home__loading">
+              <Spinner size="48px" message="Loading latest news..." />
+            </div>
+          ) : latestNewsArticles.length > 0 ? (
+            <div className="news-grid">
+              {latestNewsArticles.slice(0, 6).map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          ) : (
+            <div className="home__empty">
+              <p>No news articles available at the moment.</p>
+            </div>
+          )}
         </div>
       </section>
     </div>
