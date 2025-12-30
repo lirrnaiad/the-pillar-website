@@ -19,7 +19,7 @@ const SearchFilters = ({ currentFilters, onFilterChange }) => {
   const { categories, loading: categoriesLoading } = useCategoriesRest();
   const [localFilters, setLocalFilters] = useState({
     categoryId: currentFilters.categoryId || '',
-    tagIds: currentFilters.tagIds || [],
+    tagId: currentFilters.tagId || null,
     featured: currentFilters.featured || false,
     sortField: currentFilters.sortField || 'publishedAt',
     sortDirection: currentFilters.sortDirection || 'DESC',
@@ -28,7 +28,7 @@ const SearchFilters = ({ currentFilters, onFilterChange }) => {
   useEffect(() => {
     setLocalFilters({
       categoryId: currentFilters.categoryId || '',
-      tagIds: currentFilters.tagIds || [],
+      tagId: currentFilters.tagId || null,
       featured: currentFilters.featured || false,
       sortField: currentFilters.sortField || 'publishedAt',
       sortDirection: currentFilters.sortDirection || 'DESC',
@@ -44,14 +44,12 @@ const SearchFilters = ({ currentFilters, onFilterChange }) => {
     onFilterChange(newFilters);
   };
 
-  const handleTagToggle = (tagId) => {
-    const newTagIds = localFilters.tagIds.includes(tagId)
-      ? localFilters.tagIds.filter(id => id !== tagId)
-      : [...localFilters.tagIds, tagId];
+  const handleTagChange = (tagId) => {
+    const newTagId = localFilters.tagId === tagId ? null : tagId;
     
     const newFilters = {
       ...localFilters,
-      tagIds: newTagIds,
+      tagId: newTagId,
     };
     setLocalFilters(newFilters);
     onFilterChange(newFilters);
@@ -80,7 +78,7 @@ const SearchFilters = ({ currentFilters, onFilterChange }) => {
   const handleClearFilters = () => {
     const clearedFilters = {
       categoryId: null,
-      tagIds: [],
+      tagId: null,
       featured: false,
       sortField: 'publishedAt',
       sortDirection: 'DESC',
@@ -91,7 +89,7 @@ const SearchFilters = ({ currentFilters, onFilterChange }) => {
 
   const hasActiveFilters = 
     localFilters.categoryId ||
-    localFilters.tagIds.length > 0 ||
+    localFilters.tagId ||
     localFilters.featured ||
     localFilters.sortField !== 'publishedAt' ||
     localFilters.sortDirection !== 'DESC';
@@ -136,12 +134,22 @@ const SearchFilters = ({ currentFilters, onFilterChange }) => {
       <div className="search-filters__section">
         <label className="search-filters__label">Tags</label>
         <div className="search-filters__tags">
+          <label key="none" className="search-filters__tag">
+            <input
+              type="radio"
+              name="tag-filter"
+              checked={localFilters.tagId === null}
+              onChange={() => handleTagChange(null)}
+            />
+            <span>All Tags</span>
+          </label>
           {COMMON_TAGS.map((tag) => (
             <label key={tag.id} className="search-filters__tag">
               <input
-                type="checkbox"
-                checked={localFilters.tagIds.includes(tag.id)}
-                onChange={() => handleTagToggle(tag.id)}
+                type="radio"
+                name="tag-filter"
+                checked={localFilters.tagId === tag.id}
+                onChange={() => handleTagChange(tag.id)}
               />
               <span>{tag.name}</span>
             </label>

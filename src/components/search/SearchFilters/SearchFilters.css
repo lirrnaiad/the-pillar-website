@@ -99,7 +99,8 @@
   background-color: var(--color-gray-100);
 }
 
-.search-filters__tag input[type="checkbox"] {
+.search-filters__tag input[type="checkbox"],
+.search-filters__tag input[type="radio"] {
   cursor: pointer;
   width: 18px;
   height: 18px;

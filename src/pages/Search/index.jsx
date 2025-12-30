@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useArticles } from '../../hooks/useArticlesRest';
 import { useCategoriesRest } from '../../hooks/useCategoriesRest';
@@ -14,36 +14,134 @@ function Search() {
   // Get search query and filters from URL params
   const query = searchParams.get('q') || '';
   const categoryId = searchParams.get('categoryId') || null;
-  const tagIds = searchParams.get('tagIds') ? searchParams.get('tagIds').split(',').map(Number) : null;
+  const tagId = searchParams.get('tagId') ? Number(searchParams.get('tagId')) : null;
   const featured = searchParams.get('featured') === 'true' ? true : null;
   const sortField = searchParams.get('sortField') || 'publishedAt';
   const sortDirection = searchParams.get('sortDirection') || 'DESC';
 
-  // Fetch articles with search and filters
-  const { articles, pagination, loading, error } = useArticles({
-    page: currentPage,
-    size: 12,
-    search: query || null,
-    categoryId: categoryId ? Number(categoryId) : null,
-    tagIds: tagIds,
-    featured: featured,
+  // When search query exists, use search endpoint only (no other filters to backend)
+  // When no search query, use normal filter endpoint
+  const hasSearchQuery = query && query.trim() !== '';
+  
+  // Determine if we need client-side filtering (when multiple filters or search + filters)
+  const needsClientSideFilter = hasSearchQuery || (categoryId && tagId) || (categoryId && featured) || (tagId && featured);
+  
+  // Fetch articles - if search exists or multiple filters, fetch more and filter client-side
+  const { articles: rawArticles, pagination: rawPagination, loading, error } = useArticles({
+    page: needsClientSideFilter ? 0 : currentPage, // Fetch all for client-side filtering
+    size: needsClientSideFilter ? 1000 : 12, // Fetch more to allow client-side filtering
+    search: hasSearchQuery ? query : null,
+    // Backend priority: categoryId > featured > tagIds, so only send highest priority filter
+    categoryId: needsClientSideFilter ? null : (categoryId ? Number(categoryId) : null),
+    tagIds: needsClientSideFilter ? null : (!categoryId && tagId ? [tagId] : null),
+    featured: needsClientSideFilter ? null : (!categoryId && featured ? featured : null),
     sortField: sortField,
     sortDirection: sortDirection,
     autoFetch: true,
   });
 
+  // Client-side filtering when search query exists or multiple filters
+  const { articles, pagination } = useMemo(() => {
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'Filtering articles',data:{hasSearchQuery,needsClientSideFilter,rawArticlesCount:rawArticles?.length,categoryId,tagId,featured,query},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    
+    if (!rawArticles) {
+      return { articles: [], pagination: rawPagination };
+    }
+
+    let filtered = [...rawArticles];
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'Before filtering',data:{initialCount:filtered.length},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
+
+    // Apply client-side filters when search query exists OR multiple filters are set
+    if (needsClientSideFilter) {
+      // Filter by category
+      if (categoryId) {
+        const beforeCategory = filtered.length;
+        filtered = filtered.filter(article => 
+          article.category && article.category.id === Number(categoryId)
+        );
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'After category filter',data:{beforeCategory,afterCategory:filtered.length,categoryId},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'C'})}).catch(()=>{});
+        // #endregion
+      }
+
+      // Filter by tag
+      if (tagId) {
+        const beforeTag = filtered.length;
+        filtered = filtered.filter(article => 
+          article.tags && article.tags.some(tag => tag.id === tagId)
+        );
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'After tag filter',data:{beforeTag,afterTag:filtered.length,tagId},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'D'})}).catch(()=>{});
+        // #endregion
+      }
+
+      // Filter by featured
+      if (featured) {
+        const beforeFeatured = filtered.length;
+        filtered = filtered.filter(article => article.featured === true);
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'After featured filter',data:{beforeFeatured,afterFeatured:filtered.length,featured},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
+      }
+
+      // Sort
+      filtered.sort((a, b) => {
+        if (sortField === 'publishedAt') {
+          const dateA = new Date(a.publishedAt || a.createdAt || 0);
+          const dateB = new Date(b.publishedAt || b.createdAt || 0);
+          return sortDirection === 'DESC' ? dateB - dateA : dateA - dateB;
+        }
+        return 0;
+      });
+
+      // Client-side pagination
+      const pageSize = 12;
+      const startIndex = currentPage * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedArticles = filtered.slice(startIndex, endIndex);
+      const totalPages = Math.ceil(filtered.length / pageSize);
+
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'Final filtered results',data:{filteredCount:filtered.length,paginatedCount:paginatedArticles.length,totalPages,currentPage},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'F'})}).catch(()=>{});
+      // #endregion
+      
+      return {
+        articles: paginatedArticles,
+        pagination: {
+          ...rawPagination,
+          totalElements: filtered.length,
+          totalPages: totalPages,
+          hasNextPage: endIndex < filtered.length,
+          hasPreviousPage: currentPage > 0,
+        },
+      };
+    }
+
+    // No search query - use backend filtering results as-is
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'No search query - using backend results',data:{articlesCount:filtered.length,paginationTotal:rawPagination?.totalElements},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'G'})}).catch(()=>{});
+    // #endregion
+    
+    return { articles: filtered, pagination: rawPagination };
+  }, [rawArticles, rawPagination, needsClientSideFilter, categoryId, tagId, featured, sortField, sortDirection, currentPage]);
+
   // Reset to page 0 when filters change
   useEffect(() => {
     setCurrentPage(0);
-  }, [query, categoryId, searchParams.get('tagIds'), featured, sortField, sortDirection]);
+  }, [query, categoryId, searchParams.get('tagId'), featured, sortField, sortDirection]);
 
   const handleFilterChange = (newFilters) => {
     const params = new URLSearchParams();
     
     if (query) params.set('q', query);
     if (newFilters.categoryId) params.set('categoryId', newFilters.categoryId);
-    if (newFilters.tagIds && newFilters.tagIds.length > 0) {
-      params.set('tagIds', newFilters.tagIds.join(','));
+    if (newFilters.tagId) {
+      params.set('tagId', newFilters.tagId);
     }
     if (newFilters.featured) params.set('featured', 'true');
     if (newFilters.sortField) params.set('sortField', newFilters.sortField);
@@ -65,7 +163,7 @@ function Search() {
           <h1 className="search-header__title">
             {query 
               ? `Search Results for "${query}"` 
-              : (categoryId || (tagIds && tagIds.length > 0) || featured)
+              : (categoryId || tagId || featured)
                 ? 'Filtered Articles'
                 : 'Search Articles'}
           </h1>
@@ -82,7 +180,7 @@ function Search() {
             <SearchFilters
               currentFilters={{
                 categoryId,
-                tagIds: tagIds || [],
+                tagId: tagId || null,
                 featured: featured === true,
                 sortField,
                 sortDirection,
