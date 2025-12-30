@@ -9,6 +9,7 @@ import Feature from './pages/Feature';
 import Opinion from './pages/Opinion';
 import SciTech from './pages/SciTech';
 import Editorial from './pages/Editorial';
+import Sports from './pages/Sports';
 import Photos from './pages/Photos';
 import Cartoons from './pages/Cartoons';
 import Videos from './pages/Videos';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/opinion" element={<Opinion />} />
           <Route path="/sci-tech" element={<SciTech />} />
           <Route path="/editorial" element={<Editorial />} />
+          <Route path="/sports" element={<Sports />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/cartoons" element={<Cartoons />} />
           <Route path="/videos" element={<Videos />} />

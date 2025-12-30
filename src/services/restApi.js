@@ -51,25 +51,13 @@ const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
   const headers = createHeaders(requireAuth);
 
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:48',message:'apiRequest START',data:{url,endpoint,method,requireAuth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B,C,D,E'})}).catch(()=>{});
-  // #endregion
-
   try {
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:52',message:'BEFORE fetch',data:{url,headers:Object.keys(headers)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C,D'})}).catch(()=>{});
-    // #endregion
-
     const response = await fetch(url, {
       method,
       headers,
       body: body ? JSON.stringify(body) : null,
       ...fetchOptions,
     });
-
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:63',message:'AFTER fetch - response received',data:{status:response.status,statusText:response.statusText,ok:response.ok,url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B,D'})}).catch(()=>{});
-    // #endregion
 
     if (!response.ok) {
       // Try to parse error response
@@ -83,37 +71,18 @@ const apiRequest = async (endpoint, options = {}) => {
         errorMessage = response.statusText || errorMessage;
       }
 
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:72',message:'HTTP error response',data:{status:response.status,errorMessage,errorData},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B,D'})}).catch(()=>{});
-      // #endregion
-
       throw new Error(errorMessage);
     }
 
     // Handle 204 No Content responses
     if (response.status === 204) {
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:78',message:'204 No Content response',data:{url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-      // #endregion
       return { data: null, error: null };
     }
 
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:82',message:'BEFORE JSON parse',data:{status:response.status,url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
-
     const data = await response.json();
-
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:86',message:'AFTER JSON parse - success',data:{url,dataKeys:data?Object.keys(data):null,hasContent:data?.content!==undefined,contentLength:data?.content?.length,hasData:!!data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
 
     return { data, error: null };
   } catch (error) {
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:91',message:'CATCH block - error occurred',data:{url,errorMessage:error?.message,errorName:error?.name,errorStack:error?.stack?.substring(0,200)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,C,D'})}).catch(()=>{});
-    // #endregion
-
     console.error('API Request Error:', error);
     return { data: null, error };
   }
@@ -296,14 +265,7 @@ export const getCategoryBySlug = async (slug) => {
  * Handles the Spring Data Page format
  */
 export const transformArticlesResponse = (response) => {
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:264',message:'transformArticlesResponse START',data:{hasResponse:!!response,hasData:!!response?.data,dataKeys:response?.data?Object.keys(response.data):null},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
-
   if (!response || !response.data) {
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:275',message:'transformArticlesResponse - no data, returning empty',data:{hasResponse:!!response,hasData:!!response?.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
     return {
       articles: [],
       pagination: {
@@ -316,10 +278,6 @@ export const transformArticlesResponse = (response) => {
   }
 
   const { content = [], totalElements = 0, totalPages = 0, number = 0, size = 10 } = response.data;
-
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:288',message:'transformArticlesResponse - extracting data',data:{contentLength:content?.length,totalElements,totalPages,number,size},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
 
   return {
     articles: content,
