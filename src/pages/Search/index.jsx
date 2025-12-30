@@ -42,51 +42,31 @@ function Search() {
 
   // Client-side filtering when search query exists or multiple filters
   const { articles, pagination } = useMemo(() => {
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'Filtering articles',data:{hasSearchQuery,needsClientSideFilter,rawArticlesCount:rawArticles?.length,categoryId,tagId,featured,query},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'A'})}).catch(()=>{});
-    // #endregion
-    
     if (!rawArticles) {
       return { articles: [], pagination: rawPagination };
     }
 
     let filtered = [...rawArticles];
-    
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'Before filtering',data:{initialCount:filtered.length},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
 
     // Apply client-side filters when search query exists OR multiple filters are set
     if (needsClientSideFilter) {
       // Filter by category
       if (categoryId) {
-        const beforeCategory = filtered.length;
         filtered = filtered.filter(article => 
           article.category && article.category.id === Number(categoryId)
         );
-        // #region agent log
-        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'After category filter',data:{beforeCategory,afterCategory:filtered.length,categoryId},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'C'})}).catch(()=>{});
-        // #endregion
       }
 
       // Filter by tag
       if (tagId) {
-        const beforeTag = filtered.length;
         filtered = filtered.filter(article => 
           article.tags && article.tags.some(tag => tag.id === tagId)
         );
-        // #region agent log
-        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'After tag filter',data:{beforeTag,afterTag:filtered.length,tagId},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'D'})}).catch(()=>{});
-        // #endregion
       }
 
       // Filter by featured
       if (featured) {
-        const beforeFeatured = filtered.length;
         filtered = filtered.filter(article => article.featured === true);
-        // #region agent log
-        fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'After featured filter',data:{beforeFeatured,afterFeatured:filtered.length,featured},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'E'})}).catch(()=>{});
-        // #endregion
       }
 
       // Sort
@@ -105,10 +85,6 @@ function Search() {
       const endIndex = startIndex + pageSize;
       const paginatedArticles = filtered.slice(startIndex, endIndex);
       const totalPages = Math.ceil(filtered.length / pageSize);
-
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'Final filtered results',data:{filteredCount:filtered.length,paginatedCount:paginatedArticles.length,totalPages,currentPage},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'F'})}).catch(()=>{});
-      // #endregion
       
       return {
         articles: paginatedArticles,
@@ -123,10 +99,6 @@ function Search() {
     }
 
     // No search query - use backend filtering results as-is
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Search/index.jsx:useMemo',message:'No search query - using backend results',data:{articlesCount:filtered.length,paginationTotal:rawPagination?.totalElements},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'G'})}).catch(()=>{});
-    // #endregion
-    
     return { articles: filtered, pagination: rawPagination };
   }, [rawArticles, rawPagination, needsClientSideFilter, categoryId, tagId, featured, sortField, sortDirection, currentPage]);
 

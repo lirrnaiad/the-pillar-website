@@ -62,15 +62,7 @@ export const useArticles = (options = {}) => {
         ...(search && { search }),
       };
 
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:fetchArticles',message:'Fetching articles with params',data:{params},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'H'})}).catch(()=>{});
-      // #endregion
-
       const response = await getArticles(params);
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useArticlesRest.js:fetchArticles',message:'Received response',data:{articlesCount:response?.data?.content?.length,totalElements:response?.data?.totalElements,page:response?.data?.number},timestamp:Date.now(),sessionId:'search-debug',hypothesisId:'I'})}).catch(()=>{});
-      // #endregion
       
       if (response.error) {
         throw response.error;
