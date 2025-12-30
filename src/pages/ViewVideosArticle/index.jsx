@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useArticleWithViews, useArticlesByCategoryAndTag } from '../../hooks/useArticlesRest';
 import { Spinner } from '../../components/common';
 import ArticleCard from '../../components/ui/ArticleCard';
+import VideoFrame from '../../components/videos/VideoFrame';
 import { getArticleSubcategory } from '../../utils/articleHelpers';
 import './ViewVideosArticle.css';
 
@@ -101,29 +102,27 @@ function ViewVideosArticle() {
   return (
     <article className="videos-article">
       <div className="container">
-        {/* Hero Card Section */}
-        <div className="videos-article__hero-card">
-          <div className="videos-article__hero-image-wrapper">
-            {article.cover?.url ? (
-              <img 
-                src={article.cover.url} 
-                alt={article.cover.altText || article.title}
-                className="videos-article__hero-image"
-              />
-            ) : (
-              <div className="videos-article__hero-placeholder">
-                No Image
-              </div>
-            )}
-          </div>
-          <div className="videos-article__hero-content">
-            <span className="videos-article__hero-category">{subcategoryLabel.toUpperCase()}</span>
-            <h1 className="videos-article__hero-title">{article.title}</h1>
-            <p className="videos-article__hero-meta">by {authorName}</p>
-            {caption && (
-              <p className="videos-article__hero-caption">{caption}</p>
-            )}
-          </div>
+        {/* Article Content - Vertical Stack */}
+        <div className="videos-article__content">
+          {/* Video */}
+          <VideoFrame
+            content={article.content || ''}
+            coverUrl={article.cover?.url}
+          />
+
+          {/* Category */}
+          <span className="videos-article__category">{subcategoryLabel.toUpperCase()}</span>
+
+          {/* Title */}
+          <h1 className="videos-article__title">{article.title}</h1>
+
+          {/* Author */}
+          <p className="videos-article__author">by {authorName}</p>
+
+          {/* Caption */}
+          {caption && (
+            <p className="videos-article__caption">{caption}</p>
+          )}
         </div>
 
         {/* More from Video Report Section */}

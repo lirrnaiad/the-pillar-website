@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useArticleWithViews, useArticlesByCategoryAndTag } from '../../hooks/useArticlesRest';
 import { Spinner } from '../../components/common';
 import ArticleCard from '../../components/ui/ArticleCard';
+import ImageFrame from '../../components/photos/ImageFrame';
 import { determineCartoonOrComic } from '../../utils/articleHelpers';
 import './ViewCartoonsArticle.css';
 
@@ -101,29 +102,30 @@ function ViewCartoonsArticle() {
   return (
     <article className="cartoons-article">
       <div className="container">
-        {/* Hero Card Section */}
-        <div className="cartoons-article__hero-card">
-          <div className="cartoons-article__hero-image-wrapper">
-            {article.cover?.url ? (
-              <img 
-                src={article.cover.url} 
-                alt={article.cover.altText || article.title}
-                className="cartoons-article__hero-image"
-              />
-            ) : (
-              <div className="cartoons-article__hero-placeholder">
-                No Image
-              </div>
-            )}
+        {/* Article Content - Vertical Stack */}
+        <div className="cartoons-article__content">
+          {/* Image */}
+          <div className="cartoons-article__image-container">
+            <ImageFrame
+              src={article.cover?.url}
+              alt={article.cover?.altText || article.title}
+              variant="single"
+            />
           </div>
-          <div className="cartoons-article__hero-content">
-            <span className="cartoons-article__hero-category">{categoryLabel}</span>
-            <h1 className="cartoons-article__hero-title">{article.title}</h1>
-            <p className="cartoons-article__hero-meta">by {authorName}</p>
-            {caption && (
-              <p className="cartoons-article__hero-caption">{caption}</p>
-            )}
-          </div>
+
+          {/* Category */}
+          <span className="cartoons-article__category">{categoryLabel}</span>
+
+          {/* Title */}
+          <h1 className="cartoons-article__title">{article.title}</h1>
+
+          {/* Author */}
+          <p className="cartoons-article__author">by {authorName}</p>
+
+          {/* Caption */}
+          {caption && (
+            <p className="cartoons-article__caption">{caption}</p>
+          )}
         </div>
 
         {/* More from Cartoons Section */}
