@@ -101,26 +101,29 @@ function ViewVideosArticle() {
   return (
     <article className="videos-article">
       <div className="container">
-        {/* Large Hero-like Image/Video Thumbnail */}
-        {article.cover?.url && (
-          <div className="videos-article__hero">
-            <img 
-              src={article.cover.url} 
-              alt={article.cover.altText || article.title}
-              className="videos-article__hero-image"
-            />
-            {/* If video URL exists, could embed video player here */}
+        {/* Hero Card Section */}
+        <div className="videos-article__hero-card">
+          <div className="videos-article__hero-image-wrapper">
+            {article.cover?.url ? (
+              <img 
+                src={article.cover.url} 
+                alt={article.cover.altText || article.title}
+                className="videos-article__hero-image"
+              />
+            ) : (
+              <div className="videos-article__hero-placeholder">
+                No Image
+              </div>
+            )}
           </div>
-        )}
-
-        {/* Article Info Section */}
-        <div className="videos-article__info">
-          <div className="videos-article__category">{subcategoryLabel.toUpperCase()}</div>
-          <h1 className="videos-article__title">{article.title}</h1>
-          <div className="videos-article__author-line">by {authorName}</div>
-          {caption && (
-            <p className="videos-article__caption">{caption}</p>
-          )}
+          <div className="videos-article__hero-content">
+            <span className="videos-article__hero-category">{subcategoryLabel.toUpperCase()}</span>
+            <h1 className="videos-article__hero-title">{article.title}</h1>
+            <p className="videos-article__hero-meta">by {authorName}</p>
+            {caption && (
+              <p className="videos-article__hero-caption">{caption}</p>
+            )}
+          </div>
         </div>
 
         {/* More from Video Report Section */}

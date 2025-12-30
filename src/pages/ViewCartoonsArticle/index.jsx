@@ -101,25 +101,29 @@ function ViewCartoonsArticle() {
   return (
     <article className="cartoons-article">
       <div className="container">
-        {/* Large Hero-like Image */}
-        {article.cover?.url && (
-          <div className="cartoons-article__hero">
-            <img 
-              src={article.cover.url} 
-              alt={article.cover.altText || article.title}
-              className="cartoons-article__hero-image"
-            />
+        {/* Hero Card Section */}
+        <div className="cartoons-article__hero-card">
+          <div className="cartoons-article__hero-image-wrapper">
+            {article.cover?.url ? (
+              <img 
+                src={article.cover.url} 
+                alt={article.cover.altText || article.title}
+                className="cartoons-article__hero-image"
+              />
+            ) : (
+              <div className="cartoons-article__hero-placeholder">
+                No Image
+              </div>
+            )}
           </div>
-        )}
-
-        {/* Article Info Section */}
-        <div className="cartoons-article__info">
-          <div className="cartoons-article__category">{categoryLabel}</div>
-          <h1 className="cartoons-article__title">{article.title}</h1>
-          <div className="cartoons-article__author-line">by {authorName}</div>
-          {caption && (
-            <p className="cartoons-article__caption">{caption}</p>
-          )}
+          <div className="cartoons-article__hero-content">
+            <span className="cartoons-article__hero-category">{categoryLabel}</span>
+            <h1 className="cartoons-article__hero-title">{article.title}</h1>
+            <p className="cartoons-article__hero-meta">by {authorName}</p>
+            {caption && (
+              <p className="cartoons-article__hero-caption">{caption}</p>
+            )}
+          </div>
         </div>
 
         {/* More from Cartoons Section */}

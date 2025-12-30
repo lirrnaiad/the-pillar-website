@@ -11,63 +11,115 @@
   padding: 0 var(--spacing-md);
 }
 
-/* Hero-like Image Section */
-.cartoons-article__hero {
+/* Hero Card Section - Using ArticleCard format */
+.cartoons-article__hero-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
   width: 100%;
-  margin-bottom: var(--spacing-3xl);
+  min-height: 500px;
+  max-height: 90vh;
+  background-color: var(--color-gray-100);
+  margin-bottom: var(--spacing-4xl);
+}
+
+.cartoons-article__hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
 }
 
 .cartoons-article__hero-image {
   width: 100%;
-  height: auto;
-  max-height: 90vh;
-  object-fit: contain;
-  background-color: var(--color-gray-100);
+  height: 100%;
+  min-height: 500px;
+  object-fit: cover;
   display: block;
-  border-radius: 20px;
 }
 
-/* Article Info Section */
-.cartoons-article__info {
-  max-width: 1200px;
-  margin: 0 auto var(--spacing-4xl);
-  padding: 0 var(--spacing-md);
+.cartoons-article__hero-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-gray-200) 0%,
+    var(--color-gray-300) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-500);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
 }
 
-.cartoons-article__category {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  color: #000000;
+/* Gradient Overlay */
+.cartoons-article__hero-image-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(8, 38, 64, 0.95) 0%,
+    rgba(8, 38, 64, 0.7) 40%,
+    rgba(8, 38, 64, 0.3) 70%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+/* Content Overlay */
+.cartoons-article__hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-xl);
+  z-index: 2;
+  color: var(--color-white);
+}
+
+.cartoons-article__hero-category {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
+  margin-bottom: var(--spacing-sm);
   letter-spacing: 0.5px;
-  margin-bottom: var(--spacing-md);
 }
 
-.cartoons-article__title {
+.cartoons-article__hero-title {
   font-family: 'FONTSPRING DEMO - Elgraine Black', 'Elgraine Black', serif;
-  font-size: 50px;
+  font-size: 3.125rem; /* 50px */
   font-weight: 900;
   line-height: 1.2;
-  color: #082640;
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 var(--spacing-sm) 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.cartoons-article__author-line {
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: #000000;
-  margin-bottom: var(--spacing-lg);
+.cartoons-article__hero-meta {
+  font-size: var(--font-size-base);
+  opacity: 0.9;
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
-.cartoons-article__caption {
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: #000000;
+.cartoons-article__hero-caption {
+  font-size: var(--font-size-base);
+  opacity: 0.9;
   line-height: 1.6;
-  margin: 0;
+  margin: var(--spacing-sm) 0 0 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 /* More from Sections */
@@ -136,21 +188,30 @@
     padding: var(--spacing-2xl) 0;
   }
 
-  .cartoons-article__title {
-    font-size: 36px;
-  }
-
-  .cartoons-article__author-line {
-    font-size: 18px;
-  }
-
-  .cartoons-article__caption {
-    font-size: 18px;
-  }
-
-  .cartoons-article__hero-image {
+  .cartoons-article__hero-card {
+    min-height: 400px;
     max-height: 70vh;
-    border-radius: 10px;
+  }
+
+  .cartoons-article__hero-image-wrapper {
+    min-height: 400px;
+  }
+
+  .cartoons-article__hero-image,
+  .cartoons-article__hero-placeholder {
+    min-height: 400px;
+  }
+
+  .cartoons-article__hero-title {
+    font-size: 2rem; /* 32px */
+  }
+
+  .cartoons-article__hero-meta {
+    font-size: var(--font-size-sm);
+  }
+
+  .cartoons-article__hero-caption {
+    font-size: var(--font-size-sm);
   }
 
   .cartoons-article__more-grid {

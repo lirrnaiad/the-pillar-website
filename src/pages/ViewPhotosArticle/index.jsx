@@ -61,22 +61,55 @@ function ViewPhotosArticle() {
     ? extractCaptionFromContent(article.content || '', 1) 
     : '';
 
+  // Get author name for card format
+  const authorName = article.author?.fullName || 
+                     (article.author?.firstName && article.author?.lastName 
+                       ? `${article.author.firstName} ${article.author.lastName}`
+                       : article.author?.firstName || 'Unknown Author');
+
   // Render image gallery based on layout pattern
   const renderImageGallery = () => {
     if (images.length === 0) {
-      // Fallback to cover image if no images in content
+      // Fallback to cover image with card format if no images in content
       if (article.cover?.url) {
         return (
-          <div className="photos-article__thumbnail">
-            <img 
-              src={article.cover.url} 
-              alt={article.cover.altText || article.title}
-              className="photos-article__image"
-            />
+          <div className="photos-article__hero-card">
+            <div className="photos-article__hero-image-wrapper">
+              <img 
+                src={article.cover.url} 
+                alt={article.cover.altText || article.title}
+                className="photos-article__hero-image"
+              />
+            </div>
+            <div className="photos-article__hero-content">
+              <span className="photos-article__hero-category">PHOTOS</span>
+              <h1 className="photos-article__hero-title">{article.title}</h1>
+              <p className="photos-article__hero-meta">by {authorName}</p>
+              {article.excerpt && (
+                <p className="photos-article__hero-caption">{article.excerpt}</p>
+              )}
+            </div>
           </div>
         );
       }
-      return null;
+      // No cover image either - show placeholder card
+      return (
+        <div className="photos-article__hero-card">
+          <div className="photos-article__hero-image-wrapper">
+            <div className="photos-article__hero-placeholder">
+              No Image
+            </div>
+          </div>
+          <div className="photos-article__hero-content">
+            <span className="photos-article__hero-category">PHOTOS</span>
+            <h1 className="photos-article__hero-title">{article.title}</h1>
+            <p className="photos-article__hero-meta">by {authorName}</p>
+            {article.excerpt && (
+              <p className="photos-article__hero-caption">{article.excerpt}</p>
+            )}
+          </div>
+        </div>
+      );
     }
 
     if (images.length === 1) {
