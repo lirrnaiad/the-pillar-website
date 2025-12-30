@@ -136,7 +136,7 @@ export const getArticles = async (params = {}) => {
     sortField,
     sortDirection,
     ...(categoryId && { categoryId }),
-    ...(tagIds && { tagIds: Array.isArray(tagIds) ? tagIds.join(',') : tagIds }),
+    ...(tagIds && Array.isArray(tagIds) && tagIds.length > 0 && { tagIds }),
     ...(issueId && { issueId }),
     ...(authorId && { authorId }),
     ...(featured !== null && { featured }),

@@ -84,7 +84,7 @@ export const useArticles = (options = {}) => {
     if (autoFetch) {
       fetchArticles();
     }
-  }, [page, size, status, categoryId, sortField, sortDirection, autoFetch]);
+  }, [page, size, status, categoryId, tagIds, issueId, authorId, featured, search, sortField, sortDirection, autoFetch]);
 
   return {
     articles,
