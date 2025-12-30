@@ -172,10 +172,6 @@ export const getArticleBySlug = async (slug) => {
  * @returns {Promise} Response with articles data
  */
 export const getArticlesByCategory = async (categorySlug, params = {}) => {
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:getArticlesByCategory:ENTRY',message:'getArticlesByCategory called',data:{categorySlug,params},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B,C'})}).catch(()=>{});
-  // #endregion
-
   const {
     page = 0,
     size = 10,
@@ -191,19 +187,7 @@ export const getArticlesByCategory = async (categorySlug, params = {}) => {
   };
 
   const queryString = buildQueryString(queryParams);
-  const endpoint = `/articles/category/${categorySlug}${queryString}`;
-  
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:getArticlesByCategory:BEFORE_REQUEST',message:'About to call API',data:{categorySlug,endpoint},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B,C'})}).catch(()=>{});
-  // #endregion
-
-  const result = await apiRequest(endpoint);
-  
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'restApi.js:getArticlesByCategory:AFTER_REQUEST',message:'API call completed',data:{categorySlug,hasError:!!result.error,errorMessage:result.error?.message,hasData:!!result.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B,C'})}).catch(()=>{});
-  // #endregion
-
-  return result;
+  return apiRequest(`/articles/category/${categorySlug}${queryString}`);
 };
 
 /**

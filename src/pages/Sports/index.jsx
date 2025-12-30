@@ -7,36 +7,20 @@ import { Spinner } from '../../components/common';
 import './Sports.css';
 
 function Sports() {
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Sports/index.jsx:ENTRY',message:'Sports component rendered',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
-  // #endregion
-
   const categorySlug = 'sports';
   const categoryLabel = 'SPORTS';
   const subcategories = getSubcategoriesForCategory(categorySlug);
 
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Sports/index.jsx:AFTER_CONFIG',message:'Category config loaded',data:{categorySlug,subcategories:subcategories?.length,subcategoriesList:subcategories},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
-
   // Fetch featured article for hero section
-  const { article: featuredArticle, loading: heroLoading, error: heroError } = useFeaturedArticleByCategory(categorySlug);
+  const { article: featuredArticle, loading: heroLoading } = useFeaturedArticleByCategory(categorySlug);
 
   // Fetch latest articles (for "Latest Sports" section)
-  const { articles: latestArticles, loading: latestLoading, error: latestError } = useArticlesByCategory(categorySlug, {
+  const { articles: latestArticles, loading: latestLoading } = useArticlesByCategory(categorySlug, {
     page: 0,
     size: 6,
     sortField: 'publishedAt',
     sortDirection: 'DESC',
   });
-
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Sports/index.jsx:AFTER_HOOKS',message:'Hooks executed',data:{heroLoading,heroError:heroError?.message,latestLoading,latestError:latestError?.message,hasFeaturedArticle:!!featuredArticle,latestArticlesCount:latestArticles?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B,C'})}).catch(()=>{});
-  // #endregion
-
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Sports/index.jsx:BEFORE_RETURN',message:'About to render JSX',data:{categoryLabel,hasSubcategories:subcategories?.length>0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
 
   return (
     <div className="sports-page">
@@ -59,11 +43,6 @@ function Sports() {
       <section className="sports-latest">
         <div className="container">
           <h2 className="sports-latest__title">LATEST {categoryLabel}</h2>
-          {latestError && (
-            <div style={{ padding: '20px', background: '#fee', border: '1px solid #fcc', marginBottom: '20px' }}>
-              <strong>Error loading articles:</strong> {latestError}
-            </div>
-          )}
           {latestLoading ? (
             <div className="sports-latest__loading">
               <Spinner size="48px" message="Loading latest articles..." />
@@ -77,10 +56,6 @@ function Sports() {
                   variant="default"
                 />
               ))}
-            </div>
-          ) : !latestLoading && !latestError ? (
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-              <p>No articles found for Sports category.</p>
             </div>
           ) : null}
         </div>

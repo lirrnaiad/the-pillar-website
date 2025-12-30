@@ -22,10 +22,6 @@ import NotFound from './pages/NotFound';
 import './App.css';
 
 function App() {
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/2fc951a8-852a-48f3-969b-9e58fc53648e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'App.jsx:ENTRY',message:'App component rendered',data:{hasSports:!!Sports,typeofSports:typeof Sports},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
-
   return (
     <BrowserRouter>
       <Layout>
