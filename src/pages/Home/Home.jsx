@@ -216,7 +216,7 @@ function Home() {
     },
     {
       key: 'cartoon',
-      title: 'CARTOON AND COMICS',
+      title: 'COMICS & CARTOONS',
       seeAllLink: '/cartoons',
       hero: {
         image: pic1,

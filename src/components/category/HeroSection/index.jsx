@@ -29,7 +29,7 @@ const getArticleRoute = (article) => {
   if (categorySlug === 'photos' || categorySlug.includes('photo')) {
     return `/photos/${article.slug}`;
   }
-  if (categorySlug === 'cartoons' || categorySlug === 'cartoons-and-comics' || categorySlug.includes('cartoon') || categorySlug.includes('comic')) {
+  if (categorySlug === 'cartoons' || categorySlug === 'cartoons-and-comics' || categorySlug === 'comics-and-cartoons' || categorySlug.includes('cartoon') || categorySlug.includes('comic')) {
     return `/cartoons/${article.slug}`;
   }
   

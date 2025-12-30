@@ -14,7 +14,7 @@ const navLinks = [
   { to: '/editorial', label: 'Editorial' },
   { to: '/sports', label: 'Sports' },
   { to: '/photos', label: 'Photos' },
-  { to: '/cartoons', label: 'Cartoons' },
+  { to: '/cartoons', label: 'Comics & Cartoons' },
   { to: '/videos', label: 'Videos' },
 ];
 

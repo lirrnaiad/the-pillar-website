@@ -11,8 +11,10 @@ export const CATEGORY_SUBCATEGORIES = {
   'feature': ['Feature Story', 'Interview'], // Placeholder - adjust as needed
   'editorial': ['Editorial', 'Column'], // Placeholder - adjust as needed
   'sci-tech': ['Science', 'Technology'], // Placeholder - adjust as needed
-  'videos': ['Video Report', 'Interview Video'], // Placeholder - adjust as needed
+  'videos': ['Video Report', 'Interview Video'],
   'sports': ['Campus Sports', 'Intercollegiate'],
+  'photos': ['KODAK'],
+  'cartoons': ['Comics', 'Cartoons'],
 };
 
 /**
