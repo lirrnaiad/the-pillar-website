@@ -2,8 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useArticleWithViews, useArticlesByCategoryAndTag } from '../../hooks/useArticlesRest';
 import { Spinner } from '../../components/common';
 import ArticleCard from '../../components/ui/ArticleCard';
-import { determineCartoonOrComic } from '../../utils/articleHelpers';
-import './ViewCartoonsArticle.css';
+import { getArticleSubcategory } from '../../utils/articleHelpers';
+import './ViewVideosArticle.css';
 
 /**
  * Format date for display
@@ -22,17 +22,17 @@ const formatDate = (dateString) => {
   }
 };
 
-function ViewCartoonsArticle() {
+function ViewVideosArticle() {
   const { slug } = useParams();
   const { article, loading, error } = useArticleWithViews(slug, true);
 
-  // Determine category label
-  const categoryLabel = article ? determineCartoonOrComic(article) : 'COMICS & CARTOONS';
+  // Get subcategory label
+  const subcategoryLabel = article ? (getArticleSubcategory(article) || 'VIDEO') : 'VIDEO';
 
-  // Fetch "More from Cartoons" articles
-  const { articles: cartoonsArticles } = useArticlesByCategoryAndTag(
-    'cartoons',
-    'Cartoons',
+  // Fetch "More from Video Report" articles
+  const { articles: videoReportArticles } = useArticlesByCategoryAndTag(
+    'videos',
+    'Video Report',
     {
       size: 3,
       sortField: 'publishedAt',
@@ -41,10 +41,10 @@ function ViewCartoonsArticle() {
     }
   );
 
-  // Fetch "More from Comics" articles
-  const { articles: comicsArticles } = useArticlesByCategoryAndTag(
-    'cartoons',
-    'Comics',
+  // Fetch "More from Interview Video" articles
+  const { articles: interviewVideoArticles } = useArticlesByCategoryAndTag(
+    'videos',
+    'Interview Video',
     {
       size: 3,
       sortField: 'publishedAt',
@@ -54,20 +54,20 @@ function ViewCartoonsArticle() {
   );
 
   // Filter out current article and limit to 2
-  const filteredCartoons = cartoonsArticles
+  const filteredVideoReport = videoReportArticles
     .filter(a => a.id !== article?.id)
     .slice(0, 2);
   
-  const filteredComics = comicsArticles
+  const filteredInterviewVideo = interviewVideoArticles
     .filter(a => a.id !== article?.id)
     .slice(0, 2);
 
   if (loading) {
     return (
-      <article className="cartoons-article">
+      <article className="videos-article">
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem 0' }}>
-            <Spinner size="72px" message="Loading cartoon article…" />
+            <Spinner size="72px" message="Loading video article…" />
           </div>
         </div>
       </article>
@@ -76,13 +76,13 @@ function ViewCartoonsArticle() {
 
   if (error || !article) {
     return (
-      <article className="cartoons-article">
+      <article className="videos-article">
         <div className="container">
-          <div className="cartoons-article__notfound">
+          <div className="videos-article__notfound">
             <h1>Article Not Found</h1>
-            <p>The cartoon article you're looking for doesn't exist or has been removed.</p>
-            <Link to="/cartoons" className="cartoons-article__back-link">
-              Back to Comics & Cartoons
+            <p>The video article you're looking for doesn't exist or has been removed.</p>
+            <Link to="/videos" className="videos-article__back-link">
+              Back to Videos
             </Link>
           </div>
         </div>
@@ -99,35 +99,36 @@ function ViewCartoonsArticle() {
   const caption = article.excerpt || '';
 
   return (
-    <article className="cartoons-article">
+    <article className="videos-article">
       <div className="container">
-        {/* Large Hero-like Image */}
+        {/* Large Hero-like Image/Video Thumbnail */}
         {article.cover?.url && (
-          <div className="cartoons-article__hero">
+          <div className="videos-article__hero">
             <img 
               src={article.cover.url} 
               alt={article.cover.altText || article.title}
-              className="cartoons-article__hero-image"
+              className="videos-article__hero-image"
             />
+            {/* If video URL exists, could embed video player here */}
           </div>
         )}
 
         {/* Article Info Section */}
-        <div className="cartoons-article__info">
-          <div className="cartoons-article__category">{categoryLabel}</div>
-          <h1 className="cartoons-article__title">{article.title}</h1>
-          <div className="cartoons-article__author-line">by {authorName}</div>
+        <div className="videos-article__info">
+          <div className="videos-article__category">{subcategoryLabel.toUpperCase()}</div>
+          <h1 className="videos-article__title">{article.title}</h1>
+          <div className="videos-article__author-line">by {authorName}</div>
           {caption && (
-            <p className="cartoons-article__caption">{caption}</p>
+            <p className="videos-article__caption">{caption}</p>
           )}
         </div>
 
-        {/* More from Cartoons Section */}
-        {filteredCartoons.length > 0 && (
-          <section className="cartoons-article__more-section">
-            <h2 className="cartoons-article__more-title">More from Cartoons</h2>
-            <div className="cartoons-article__more-grid">
-              {filteredCartoons.map((relatedArticle) => (
+        {/* More from Video Report Section */}
+        {filteredVideoReport.length > 0 && (
+          <section className="videos-article__more-section">
+            <h2 className="videos-article__more-title">More from Video Report</h2>
+            <div className="videos-article__more-grid">
+              {filteredVideoReport.map((relatedArticle) => (
                 <ArticleCard
                   key={relatedArticle.id}
                   article={relatedArticle}
@@ -138,12 +139,12 @@ function ViewCartoonsArticle() {
           </section>
         )}
 
-        {/* More from Comics Section */}
-        {filteredComics.length > 0 && (
-          <section className="cartoons-article__more-section">
-            <h2 className="cartoons-article__more-title">More from Comics</h2>
-            <div className="cartoons-article__more-grid">
-              {filteredComics.map((relatedArticle) => (
+        {/* More from Interview Video Section */}
+        {filteredInterviewVideo.length > 0 && (
+          <section className="videos-article__more-section">
+            <h2 className="videos-article__more-title">More from Interview Video</h2>
+            <div className="videos-article__more-grid">
+              {filteredInterviewVideo.map((relatedArticle) => (
                 <ArticleCard
                   key={relatedArticle.id}
                   article={relatedArticle}
@@ -158,5 +159,5 @@ function ViewCartoonsArticle() {
   );
 }
 
-export default ViewCartoonsArticle;
+export default ViewVideosArticle;
 

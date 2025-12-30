@@ -16,6 +16,7 @@ import Videos from './pages/Videos';
 import Article from './pages/Article';
 import ViewPhotosArticle from './pages/ViewPhotosArticle';
 import ViewCartoonsArticle from './pages/ViewCartoonsArticle';
+import ViewVideosArticle from './pages/ViewVideosArticle';
 import Archive from './pages/Archive';
 import NotFound from './pages/NotFound';
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/article/:slug" element={<Article />} />
           <Route path="/photos/:slug" element={<ViewPhotosArticle />} />
           <Route path="/cartoons/:slug" element={<ViewCartoonsArticle />} />
+          <Route path="/videos/:slug" element={<ViewVideosArticle />} />
           
           {/* Archive Route */}
           <Route path="/archive" element={<Archive />} />

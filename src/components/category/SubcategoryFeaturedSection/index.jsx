@@ -35,6 +35,9 @@ const getArticleRoute = (article) => {
   if (categorySlug === 'cartoons' || categorySlug === 'cartoons-and-comics' || categorySlug === 'comics-and-cartoons' || categorySlug.includes('cartoon') || categorySlug.includes('comic')) {
     return `/cartoons/${article.slug}`;
   }
+  if (categorySlug === 'videos' || categorySlug.includes('video')) {
+    return `/videos/${article.slug}`;
+  }
   
   return `/article/${article.slug}`;
 };

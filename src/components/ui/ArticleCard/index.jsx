@@ -17,6 +17,9 @@ const getArticleRoute = (article) => {
   if (categorySlug === 'cartoons' || categorySlug === 'cartoons-and-comics' || categorySlug.includes('cartoon') || categorySlug.includes('comic')) {
     return `/cartoons/${article.slug}`;
   }
+  if (categorySlug === 'videos' || categorySlug.includes('video')) {
+    return `/videos/${article.slug}`;
+  }
   
   // Default to regular article route
   return `/article/${article.slug}`;

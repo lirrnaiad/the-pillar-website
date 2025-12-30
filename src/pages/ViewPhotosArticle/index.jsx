@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useArticleWithViews } from '../../hooks/useArticlesRest';
 import { Spinner } from '../../components/common';
+import { parseImagesFromContent, extractCaptionFromContent } from '../../utils/articleHelpers';
 import './ViewPhotosArticle.css';
 
 /**
@@ -52,66 +53,169 @@ function ViewPhotosArticle() {
     );
   }
 
-  const authorName = article.author?.fullName || 
-                     (article.author?.firstName && article.author?.lastName 
-                       ? `${article.author.firstName} ${article.author.lastName}`
-                       : article.author?.firstName || 'Unknown Author');
-  const publishedDate = formatDate(article.publishedAt || article.createdAt);
+  // Parse images from content
+  const images = parseImagesFromContent(article.content || '');
+  
+  // Get caption for second image (caption + image side by side)
+  const captionForSecondImage = images.length > 1 
+    ? extractCaptionFromContent(article.content || '', 1) 
+    : '';
 
-  // Parse content to extract images if available
-  // For now, we'll display the cover image prominently
-  // In a real implementation, you might want to parse the content for multiple images
+  // Render image gallery based on layout pattern
+  const renderImageGallery = () => {
+    if (images.length === 0) {
+      // Fallback to cover image if no images in content
+      if (article.cover?.url) {
+        return (
+          <div className="photos-article__thumbnail">
+            <img 
+              src={article.cover.url} 
+              alt={article.cover.altText || article.title}
+              className="photos-article__image"
+            />
+          </div>
+        );
+      }
+      return null;
+    }
+
+    if (images.length === 1) {
+      // Single image - show as thumbnail
+      return (
+        <div className="photos-article__thumbnail">
+          <img 
+            src={images[0].src} 
+            alt={images[0].alt || article.title}
+            className="photos-article__image"
+          />
+        </div>
+      );
+    }
+
+    const gallery = [];
+    const firstImage = images[0];
+    const lastImage = images[images.length - 1];
+    const middleImages = images.slice(1, -1);
+
+    // 1. First image (thumbnail) - large, full width
+    gallery.push(
+      <div key="thumbnail" className="photos-article__thumbnail">
+        <img 
+          src={firstImage.src} 
+          alt={firstImage.alt || article.title}
+          className="photos-article__image"
+        />
+      </div>
+    );
+
+    // 2. Caption + Image side by side (if we have at least 2 images and more than 2 total)
+    // If we have exactly 2 images, skip this and show second image as last image
+    if (images.length > 2 && captionForSecondImage) {
+      gallery.push(
+        <div key="caption-image" className="photos-article__caption-image-row">
+          <div className="photos-article__caption-text">
+            {captionForSecondImage}
+          </div>
+          <div className="photos-article__caption-image">
+            <img 
+              src={images[1].src} 
+              alt={images[1].alt || article.title}
+              className="photos-article__image"
+            />
+          </div>
+        </div>
+      );
+    } else if (images.length > 2) {
+      // If no caption and more than 2 images, show second image as single
+      gallery.push(
+        <div key="image-1" className="photos-article__single-image">
+          <img 
+            src={images[1].src} 
+            alt={images[1].alt || article.title}
+            className="photos-article__image"
+          />
+        </div>
+      );
+    }
+
+    // 3. Loop pattern for middle images (2-1 pattern)
+    // Pattern: [Image][Image] → [Image] → [Image][Image] → [Image] → ...
+    // Start from image 2 if we have more than 2 images, otherwise skip
+    let imageIndex = images.length > 2 ? 2 : images.length;
+    let patternIndex = 0; // 0 = two images, 1 = one image
+
+    while (imageIndex < images.length - 1) {
+      if (patternIndex === 0) {
+        // Two images side by side
+        if (imageIndex + 1 < images.length - 1) {
+          gallery.push(
+            <div key={`two-${imageIndex}`} className="photos-article__two-images">
+              <img 
+                src={images[imageIndex].src} 
+                alt={images[imageIndex].alt || article.title}
+                className="photos-article__image"
+              />
+              <img 
+                src={images[imageIndex + 1].src} 
+                alt={images[imageIndex + 1].alt || article.title}
+                className="photos-article__image"
+              />
+            </div>
+          );
+          imageIndex += 2;
+        } else {
+          // Only one image left before last, show as single
+          gallery.push(
+            <div key={`single-${imageIndex}`} className="photos-article__single-image">
+              <img 
+                src={images[imageIndex].src} 
+                alt={images[imageIndex].alt || article.title}
+                className="photos-article__image"
+              />
+            </div>
+          );
+          imageIndex += 1;
+        }
+        patternIndex = 1;
+      } else {
+        // One image (full width)
+        gallery.push(
+          <div key={`single-${imageIndex}`} className="photos-article__single-image">
+            <img 
+              src={images[imageIndex].src} 
+              alt={images[imageIndex].alt || article.title}
+              className="photos-article__image"
+            />
+          </div>
+        );
+        imageIndex += 1;
+        patternIndex = 0;
+      }
+    }
+
+    // 4. Last image - full width, hits horizontal viewport borders
+    // Only show if we have more than 1 image
+    if (images.length > 1) {
+      gallery.push(
+        <div key="last-image" className="photos-article__last-image-wrapper">
+          <img 
+            src={lastImage.src} 
+            alt={lastImage.alt || article.title}
+            className="photos-article__image photos-article__last-image"
+          />
+        </div>
+      );
+    }
+
+    return gallery;
+  };
 
   return (
     <article className="photos-article">
       <div className="container">
-        {/* Hero Section with Large Image */}
-        {article.cover?.url && (
-          <div className="photos-article__hero">
-            <img 
-              src={article.cover.url} 
-              alt={article.cover.altText || article.title}
-              className="photos-article__hero-image"
-            />
-            {article.cover.altText && (
-              <p className="photos-article__hero-caption">{article.cover.altText}</p>
-            )}
-          </div>
-        )}
-
-        {/* Article Header */}
-        <header className="photos-article__header">
-          <h1 className="photos-article__title">{article.title}</h1>
-
-          <div className="photos-article__meta">
-            <div className="photos-article__byline">
-              <span className="photos-article__date">{publishedDate}</span>
-              {authorName && (
-                <>
-                  {' '}
-                  <span className="photos-article__separator">|</span>
-                  {' '}
-                  <span className="photos-article__author">by {authorName}</span>
-                </>
-              )}
-            </div>
-            {article.excerpt && (
-              <p className="photos-article__excerpt">{article.excerpt}</p>
-            )}
-          </div>
-        </header>
-
-        {/* Article Content */}
-        <div className="photos-article__content">
-          {article.content && (
-            <div 
-              className="photos-article__content-html"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
-          )}
-          {!article.content && article.excerpt && (
-            <p className="photos-article__description">{article.excerpt}</p>
-          )}
+        {/* Image Gallery */}
+        <div className="photos-article__gallery">
+          {renderImageGallery()}
         </div>
       </div>
     </article>
